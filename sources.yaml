@@ -1,5 +1,5 @@
-# LISTE PROVISOIRE – sélection définitive à arrêter ensemble avec la grille de fiabilité.
-# Sources de veille – flux RSS vérifiés le 05/11/2026 (tous répondent en HTTP 200).
+# Sources de veille automatisée – sélection validée (12 flux RSS vérifiés le 05/11/2026).
+# Sources écartées et veille manuelle (réseaux sociaux, Artificial Analysis) : voir veille/sources.md.
 # La fiabilité de chaque source est évaluée dans veille/sources.md avec la
 # grille du référentiel (auteur identifié, expertise, date, sources citées,
 # structure, accessibilité, information confirmable).
@@ -31,12 +31,6 @@ sources:
     theme: reglementaire
     langue: en
     fiabilite: 4
-  - id: cert_fr
-    nom: "CERT-FR (ANSSI) – Actualités"
-    url: "https://www.cert.ssi.gouv.fr/actualite/feed/"
-    theme: securite
-    langue: fr
-    fiabilite: 5
 
   # --- Technique : fournisseurs et écosystème ------------------------------
   - id: mistral
@@ -77,12 +71,6 @@ sources:
     theme: presse
     langue: fr
     fiabilite: 4
-  - id: actuia
-    nom: "ActuIA"
-    url: "https://www.actuia.com/feed/"
-    theme: presse
-    langue: fr
-    fiabilite: 3
   - id: lmi_ia
     nom: "Le Monde Informatique – Intelligence artificielle"
     url: "https://www.lemondeinformatique.fr/flux-rss/thematique/intelligence-artificielle/rss.xml"

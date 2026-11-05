@@ -17,6 +17,8 @@ Ces deux thèmes portent directement sur l'outil et la réglementation mobilisé
 | Service d'IA (`veilleia analyser`) | Tri, notation, résumé en français | Selon fournisseur (≤ 30 €/mois) |
 | Agrégateur RSS en ligne (Inoreader ou Feedly, offre gratuite) | Lecture manuelle, sources sans traitement IA | Gratuit |
 | Newsletters (ex. EU AI Act Newsletter) | Analyse d'experts, recoupement | Gratuit |
+| Liste X (Twitter) « IA officielle » | Flux réseau social : annonces à chaud des fournisseurs et de la CNIL, consultées manuellement | Gratuit |
+| Artificial Analysis | Comparatif indépendant des modèles, pour le benchmark | Gratuit |
 
 Choix cohérent avec le budget : uniquement des outils gratuits, sauf le service d'IA, dont le coût est
 suivi par le monitorage.
@@ -26,7 +28,7 @@ suivi par le monitorage.
 | Quand | Quoi |
 |---|---|
 | Mercredi 18 h (automatique) | `veilleia hebdo` : collecte, analyse, synthèse, monitorage (tâche planifiée) |
-| **Jeudi 9 h – 10 h (1 h)** | Relecture de la synthèse, vérification des points clés dans les sources, ajout des informations lues hors outil, diffusion, mise à jour du journal |
+| **Jeudi 9 h – 10 h (1 h)** | Relecture de la synthèse, vérification des points clés dans les sources, consultation de la liste X et ajout des informations lues hors outil (après recoupement), diffusion, mise à jour du journal |
 | 1er jeudi du mois | Revue des sources (flux en erreur, nouvelles sources, fiabilité) |
 
 ## Diffusion

@@ -1,0 +1,30 @@
+# Secrets – ne jamais versionner les clés API
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+
+# Données d'exécution (régénérables)
+data/*.db
+data/*.db-journal
+logs/
+sorties/monitoring/
+
+# Résultats bruts du benchmark (on versionne seulement les résumés)
+benchmark/resultats/brut/
+
+# Divers
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

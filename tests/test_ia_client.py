@@ -3,7 +3,7 @@ import json
 import httpx
 import pytest
 
-from veilleia.ia_client import ClientIA, ErreurServiceIA
+from veilleia.ia_client import ClientIA, ErreurServiceIA, texte_reponse
 from veilleia.schemas import AnalyseArticle
 
 from .conftest import ANALYSE_VALIDE, reponse_chat
@@ -26,7 +26,7 @@ def test_requete_conforme_et_authentifiee(fabrique_client):
     corps = json.loads(req.content)
     assert req.url == "https://api.mistral.ai/v1/chat/completions"
     assert req.headers["Authorization"] == "Bearer cle-de-test"
-    assert corps["model"] == "mistral-small-latest"
+    assert corps["model"] == "ministral-8b-latest"
     assert corps["response_format"] == {"type": "json_object"}
     assert corps["temperature"] == 0.1 and corps["max_tokens"] == 300
 
@@ -91,3 +91,12 @@ def test_parametres_specifiques_openai(config, monkeypatch, stockage):
                       client_http=httpx.Client(transport=httpx.MockTransport(gestionnaire)))
     client.completer_json([{"role": "user", "content": "x"}], AnalyseArticle, modele="petit", max_tokens=50)
     assert "max_completion_tokens" in requetes[0] and "temperature" not in requetes[0]
+
+
+def test_texte_reponse_modele_a_raisonnement():
+    # Format des modèles « à raisonnement » : le raisonnement est ignoré, seul le texte compte.
+    blocs = [{"type": "thinking", "thinking": [{"type": "text", "text": "je réfléchis"}]},
+             {"type": "text", "text": "OK"}]
+    assert texte_reponse(blocs) == "OK"
+    assert texte_reponse("OK") == "OK"
+    assert texte_reponse(None) == ""

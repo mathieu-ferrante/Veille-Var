@@ -39,6 +39,19 @@ class ErreurServiceIA(Exception):
         self.code_http = code_http
 
 
+def texte_reponse(contenu) -> str:
+    """Extrait le texte de la réponse.
+
+    La plupart des services renvoient une chaîne. Les modèles « à raisonnement » (ex. mistral-large-4)
+    renvoient une liste de blocs : on ne garde que les blocs de type « text », jamais le raisonnement.
+    """
+    if contenu is None:
+        return ""
+    if isinstance(contenu, str):
+        return contenu
+    return "".join(b.get("text", "") for b in contenu if isinstance(b, dict) and b.get("type") == "text")
+
+
 @dataclass
 class ReponseIA:
     texte: str
@@ -112,7 +125,7 @@ class ClientIA:
                 donnees = r.json()
                 latence = time.perf_counter() - debut
                 usage = donnees.get("usage") or {}
-                texte = donnees["choices"][0]["message"].get("content") or ""
+                texte = texte_reponse(donnees["choices"][0]["message"].get("content"))
                 return ReponseIA(
                     texte=texte,
                     modele=donnees.get("model", nom_modele),
@@ -162,7 +175,7 @@ class ClientIA:
     def verifier_acces(self, modele: str = "petit") -> ReponseIA:
         """Test de connexion minimal (utilisé par `veilleia verifier`)."""
         rep = self.completer([{"role": "user", "content": "Réponds uniquement : OK"}], modele,
-                             max_tokens=20, json_attendu=False, tache="test")
+                             max_tokens=300, json_attendu=False, tache="test")
         self._journaliser("test", rep.modele, "ok", rep.code_http, rep.latence_s, rep.tokens_entree,
                           rep.tokens_sortie, None, rep.tentatives, None)
         return rep

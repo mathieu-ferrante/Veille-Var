@@ -8,6 +8,19 @@ Le benchmark compare les services d'IA capables de réaliser les fonctionnalité
 2. **Des tests réels et chiffrés** sur un jeu de 30 publications annotées à la main, avec le même
    prompt et les mêmes paramètres pour chaque service.
 
+### Services testés et services étudiés sur documentation
+
+| Service | Volet | Raison |
+|---|---|---|
+| Mistral AI | Tests + documentation | Offre gratuite d'expérimentation, fournisseur européen |
+| Google Gemini | Tests + documentation | Offre gratuite (AI Studio) |
+| Modèle local (Ollama) | Tests + documentation | Gratuit, exécuté sur le poste |
+| OpenAI, Anthropic Claude, Azure OpenAI | Documentation seule | API uniquement payantes : pas de dépense engagée sans commande publique pour une phase d'étude |
+| Albert API (DINUM) | Documentation seule | Accès réservé aux administrations, sur demande |
+
+Le connecteur gère déjà tous ces fournisseurs (`config.yaml`) : un service étudié sur documentation
+peut être testé plus tard en ajoutant simplement sa clé dans `.env`, sans modifier le code.
+
 ## Mode opératoire
 
 ```bash
@@ -23,7 +36,7 @@ veilleia jeu-test
 
 # 4. Lancer le benchmark sur les services dont la clé est présente dans .env
 veilleia benchmark                      # tous
-veilleia benchmark --services mistral,openai,albert
+veilleia benchmark --services mistral,gemini,ollama
 ```
 
 Résultats écrits dans `benchmark/resultats/` :
@@ -55,7 +68,7 @@ sur une grille simple (fidélité, structure, clarté, sources citées).
 
 | Critère (poids) | Albert API (DINUM) | Mistral AI | OpenAI | Google Gemini | Anthropic Claude | Azure OpenAI | Modèle local (Ollama) |
 |---|---|---|---|---|---|---|---|
-| Adéquation F1–F5 (30 %) – *tests* | | | | | | *(non testé : même modèles qu'OpenAI)* | |
+| Adéquation F1–F5 (30 %) – *tests* | *(non testé : accès sur demande)* | | *(non testé : payant)* | | *(non testé : payant)* | *(non testé : payant, mêmes modèles qu'OpenAI)* | |
 | RGPD et souveraineté (25 %) : localisation, lois extraterritoriales, réutilisation des données, contrat de sous-traitance | | | | | | | |
 | Coût et achat public (10 %) : prix / million de tokens, offre gratuite, achat via marché ou centrale | | | | | | | |
 | Éco-responsabilité (15 %) : tailles de modèles, données publiées sur l'empreinte, datacenters | | | | | | | |

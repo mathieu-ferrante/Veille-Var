@@ -53,8 +53,10 @@ fournisseurs:
     cle_env: GEMINI_API_KEY
     json_mode: true
     modeles:
-      petit: "gemini-2.5-flash"
-      grand: "gemini-2.5-pro"
+      # gemini-2.5-* n'est plus ouvert aux nouveaux comptes (HTTP 404, vérifié le 05/11/2026).
+      # 3.7/3.8-flash saturés (HTTP 503 / délai dépassé) ; « pro » sans quota gratuit.
+      petit: "gemini-3.5-flash-lite"
+      grand: "gemini-3.5-flash"
     prix: {}
 
   anthropic:

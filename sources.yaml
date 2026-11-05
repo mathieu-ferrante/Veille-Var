@@ -1,0 +1,99 @@
+# LISTE PROVISOIRE – sélection définitive à arrêter ensemble avec la grille de fiabilité.
+# Sources de veille – flux RSS vérifiés le 05/11/2026 (tous répondent en HTTP 200).
+# La fiabilité de chaque source est évaluée dans veille/sources.md avec la
+# grille du référentiel (auteur identifié, expertise, date, sources citées,
+# structure, accessibilité, information confirmable).
+# fiabilite : note globale sur 5 issue de cette grille.
+
+sources:
+  # --- Réglementaire -------------------------------------------------------
+  - id: cnil
+    nom: "CNIL – Actualités"
+    url: "https://www.cnil.fr/fr/rss.xml"
+    theme: reglementaire
+    langue: fr
+    fiabilite: 5
+  - id: linc
+    nom: "LINC – Laboratoire d'innovation numérique de la CNIL"
+    url: "https://linc.cnil.fr/rss.xml"
+    theme: reglementaire
+    langue: fr
+    fiabilite: 5
+  - id: commission_ue
+    nom: "Commission européenne – Shaping Europe's digital future"
+    url: "https://digital-strategy.ec.europa.eu/en/rss.xml"
+    theme: reglementaire
+    langue: en
+    fiabilite: 5
+  - id: ai_act_newsletter
+    nom: "The EU AI Act Newsletter (Future of Life Institute)"
+    url: "https://artificialintelligenceact.substack.com/feed"
+    theme: reglementaire
+    langue: en
+    fiabilite: 4
+  - id: cert_fr
+    nom: "CERT-FR (ANSSI) – Actualités"
+    url: "https://www.cert.ssi.gouv.fr/actualite/feed/"
+    theme: securite
+    langue: fr
+    fiabilite: 5
+
+  # --- Technique : fournisseurs et écosystème ------------------------------
+  - id: mistral
+    nom: "Mistral AI – Blog"
+    url: "https://mistral.ai/rss.xml"
+    theme: technique
+    langue: en
+    fiabilite: 3   # source officielle mais promotionnelle : à recouper
+  - id: huggingface
+    nom: "Hugging Face – Blog"
+    url: "https://huggingface.co/blog/feed.xml"
+    theme: technique
+    langue: en
+    fiabilite: 4
+  - id: openai
+    nom: "OpenAI – News"
+    url: "https://openai.com/news/rss.xml"
+    theme: technique
+    langue: en
+    fiabilite: 3   # source officielle mais promotionnelle : à recouper
+  - id: google_ai
+    nom: "Google – Blog IA"
+    url: "https://blog.google/technology/ai/rss/"
+    theme: technique
+    langue: en
+    fiabilite: 3   # source officielle mais promotionnelle : à recouper
+  - id: simon_willison
+    nom: "Simon Willison's Weblog"
+    url: "https://simonwillison.net/atom/everything/"
+    theme: technique
+    langue: en
+    fiabilite: 4
+
+  # --- Presse spécialisée francophone --------------------------------------
+  - id: next
+    nom: "Next (ex-Next INpact)"
+    url: "https://next.ink/feed/"
+    theme: presse
+    langue: fr
+    fiabilite: 4
+  - id: actuia
+    nom: "ActuIA"
+    url: "https://www.actuia.com/feed/"
+    theme: presse
+    langue: fr
+    fiabilite: 3
+  - id: lmi_ia
+    nom: "Le Monde Informatique – Intelligence artificielle"
+    url: "https://www.lemondeinformatique.fr/flux-rss/thematique/intelligence-artificielle/rss.xml"
+    theme: presse
+    langue: fr
+    fiabilite: 4
+
+  # --- Sobriété numérique ---------------------------------------------------
+  - id: greenit
+    nom: "GreenIT.fr"
+    url: "https://www.greenit.fr/feed/"
+    theme: eco
+    langue: fr
+    fiabilite: 4

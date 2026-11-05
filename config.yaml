@@ -18,11 +18,14 @@ fournisseurs:
     cle_env: MISTRAL_API_KEY
     json_mode: true
     modeles:
-      petit: "mistral-small-latest"
-      grand: "mistral-medium-latest"
+      # Plan gratuit « Experiment » : quota nul sur mistral-small et mistral-medium
+      # (x-ratelimit-limit-req-minute = 0, vérifié le 05/11/2026). Modèles autorisés :
+      # ministral-8b (188 req/min) et mistral-large-4 (50 req/min, 20 000 tokens/min).
+      petit: "ministral-8b-latest"
+      grand: "mistral-large-4"
     prix:
-      mistral-small-latest: { entree: null, sortie: null }
-      mistral-medium-latest: { entree: null, sortie: null }
+      ministral-8b-latest: { entree: null, sortie: null }
+      mistral-large-4: { entree: null, sortie: null }
 
   albert:
     libelle: "Albert API (DINUM)"

@@ -133,10 +133,30 @@ def evaluer_service(fournisseur: Fournisseur, config: Config, articles: list[dic
     prod = config.production
     modele = fournisseur.modele(prod["modele_analyse"])
     res = ResultatService(fournisseur.id, fournisseur.libelle, modele)
+    proprietaire = client is None  # on ne ferme que le client créé ici
     client = client or ClientIA(fournisseur, stockage, timeout_s=prod["timeout_s"], tentatives=prod["tentatives"])
     dossier_brut.mkdir(parents=True, exist_ok=True)
     nb_appels_avant = stockage.compter("appels_ia")
-    with (dossier_brut / f"{fournisseur.id}.jsonl").open("w", encoding="utf-8") as brut:
+    try:
+        _evaluer_articles(client, config, articles, res, dossier_brut / f"{fournisseur.id}.jsonl", prod)
+    finally:
+        if proprietaire:
+            client.fermer()
+    # Mesures techniques relevées par le connecteur pendant le passage
+    appels = list(stockage.cnx.execute("SELECT * FROM appels_ia WHERE id > ? AND fournisseur = ?",
+                                       (nb_appels_avant, fournisseur.id)))
+    res.latences = [r["latence_s"] for r in appels if r["latence_s"] is not None and r["statut"] == "ok"]
+    res.tokens_entree = sum(r["tokens_entree"] or 0 for r in appels)
+    res.tokens_sortie = sum(r["tokens_sortie"] or 0 for r in appels)
+    couts = [r["cout_eur"] for r in appels if r["cout_eur"] is not None]
+    res.cout_eur = sum(couts) if couts else None
+    return res
+
+
+def _evaluer_articles(client: ClientIA, config: Config, articles: list[dict], res: ResultatService,
+                      chemin_brut: Path, prod: dict) -> None:
+    fournisseur = client.fournisseur
+    with chemin_brut.open("w", encoding="utf-8") as brut:
         for i, a in enumerate(articles, start=1):
             res.nb += 1
             ligne: dict = {"id": a["id"], "titre": a["titre"], "attendu": a["annotation"]}
@@ -158,15 +178,6 @@ def evaluer_service(fournisseur: Fournisseur, config: Config, articles: list[dic
             brut.write(json.dumps(ligne, ensure_ascii=False) + "\n")
             log.info("[%s %d/%d] %s", fournisseur.id, i, len(articles), "ok" if "obtenu" in ligne else "échec")
             time.sleep(prod.get("pause_entre_appels_s", 0))
-    # Mesures techniques relevées par le connecteur pendant le passage
-    appels = list(stockage.cnx.execute("SELECT * FROM appels_ia WHERE id > ? AND fournisseur = ?",
-                                       (nb_appels_avant, fournisseur.id)))
-    res.latences = [r["latence_s"] for r in appels if r["latence_s"] is not None and r["statut"] == "ok"]
-    res.tokens_entree = sum(r["tokens_entree"] or 0 for r in appels)
-    res.tokens_sortie = sum(r["tokens_sortie"] or 0 for r in appels)
-    couts = [r["cout_eur"] for r in appels if r["cout_eur"] is not None]
-    res.cout_eur = sum(couts) if couts else None
-    return res
 
 
 def ecrire_resultats(resultats: list[ResultatService], dossier: Path) -> Path:

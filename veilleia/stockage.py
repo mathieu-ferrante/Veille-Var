@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS articles (
     entites       TEXT,                      -- JSON
     analyse_le    TEXT,
     analyse_par   TEXT,                      -- fournisseur/modèle
-    erreur_analyse TEXT
+    erreur_analyse TEXT,
+    nb_echecs     INTEGER NOT NULL DEFAULT 0 -- analyses en échec (abandon après MAX_ECHECS_ANALYSE)
 );
 CREATE INDEX IF NOT EXISTS idx_articles_date ON articles(date_pub);
 
@@ -76,6 +77,9 @@ CREATE TABLE IF NOT EXISTS syntheses (
 """
 
 
+MAX_ECHECS_ANALYSE = 3  # au-delà, la publication n'est plus renvoyée au service (pas de refacturation sans fin)
+
+
 def maintenant() -> str:
     return datetime.now(UTC).isoformat(timespec="seconds")
 
@@ -112,6 +116,14 @@ class Stockage:
         self.cnx = sqlite3.connect(str(chemin))
         self.cnx.row_factory = sqlite3.Row
         self.cnx.executescript(SCHEMA)
+        self._migrer()
+
+    def _migrer(self) -> None:
+        """Ajoute les colonnes apparues après la création d'une base existante."""
+        colonnes = {r["name"] for r in self.cnx.execute("PRAGMA table_info(articles)")}
+        if "nb_echecs" not in colonnes:
+            with self.cnx:
+                self.cnx.execute("ALTER TABLE articles ADD COLUMN nb_echecs INTEGER NOT NULL DEFAULT 0")
 
     def fermer(self) -> None:
         self.cnx.close()
@@ -131,10 +143,13 @@ class Stockage:
         return nouveaux
 
     def articles_a_analyser(self, limite: int | None = None) -> list[sqlite3.Row]:
-        sql = "SELECT * FROM articles WHERE analyse_le IS NULL ORDER BY date_pub DESC"
-        if limite:
-            sql += f" LIMIT {int(limite)}"
-        return list(self.cnx.execute(sql))
+        """Publications pas encore analysées, hors celles qui ont déjà échoué MAX_ECHECS_ANALYSE fois."""
+        sql = "SELECT * FROM articles WHERE analyse_le IS NULL AND nb_echecs < ? ORDER BY date_pub DESC"
+        params: tuple[int, ...] = (MAX_ECHECS_ANALYSE,)
+        if limite is not None:  # --limite 0 signifie bien « aucune »
+            sql += " LIMIT ?"
+            params += (max(0, int(limite)),)
+        return list(self.cnx.execute(sql, params))
 
     def enregistrer_analyse(self, article_id: str, analyse: dict[str, Any], analyse_par: str) -> None:
         with self.cnx:
@@ -155,7 +170,8 @@ class Stockage:
 
     def enregistrer_erreur_analyse(self, article_id: str, erreur: str) -> None:
         with self.cnx:
-            self.cnx.execute("UPDATE articles SET erreur_analyse=? WHERE id=?", (erreur[:500], article_id))
+            self.cnx.execute("UPDATE articles SET erreur_analyse=?, nb_echecs = nb_echecs + 1 WHERE id=?",
+                             (erreur[:500], article_id))
 
     def articles_pour_synthese(self, debut: str, fin: str, pertinence_min: int, limite: int) -> list[sqlite3.Row]:
         return list(
@@ -201,10 +217,14 @@ class Stockage:
         depuis = (datetime.now(UTC) - timedelta(days=jours)).isoformat(timespec="seconds")
         return list(self.cnx.execute("SELECT * FROM appels_ia WHERE horodatage >= ? ORDER BY horodatage", (depuis,)))
 
-    def derniere_collecte_par_source(self) -> list[sqlite3.Row]:
-        return list(
-            self.cnx.execute(
-                "SELECT c.* FROM collectes c JOIN (SELECT source_id, MAX(id) mid FROM collectes"
-                " GROUP BY source_id) d ON c.id = d.mid ORDER BY c.source_id"
-            )
+    def derniere_collecte_par_source(self, sources_actives: Iterable[str] | None = None) -> list[sqlite3.Row]:
+        """Dernière collecte de chaque source. Avec `sources_actives`, les sources retirées de sources.yaml
+        sont ignorées (sinon une source supprimée resterait « en erreur » indéfiniment)."""
+        lignes = self.cnx.execute(
+            "SELECT c.* FROM collectes c JOIN (SELECT source_id, MAX(id) mid FROM collectes"
+            " GROUP BY source_id) d ON c.id = d.mid ORDER BY c.source_id"
         )
+        if sources_actives is None:
+            return list(lignes)
+        actives = set(sources_actives)
+        return [r for r in lignes if r["source_id"] in actives]

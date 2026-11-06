@@ -18,6 +18,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from .collecte import url_web
 from .config import Config
 from .ia_client import ClientIA
 from .prompts import messages_synthese
@@ -75,10 +76,16 @@ def generer_synthese(client: ClientIA, config: Config, stockage: Stockage,
         modele=prod["modele_synthese"], max_tokens=prod["max_tokens_synthese"],
         temperature=prod["temperature"], tache="synthese",
     )
-    # On écarte les références hors limites (le modèle ne doit citer que les articles fournis)
+    # On écarte les références hors limites ou en double (le modèle ne doit citer que les articles fournis).
+    # Un point qui ne cite plus aucune publication est retiré : toute information diffusée doit être sourcée.
     for section in synthese.sections:
         for point in section.points:
-            point.references = [r for r in point.references if 1 <= r <= len(articles)]
+            point.references = list(dict.fromkeys(r for r in point.references if 1 <= r <= len(articles)))
+        retires = [p.titre for p in section.points if not p.references]
+        if retires:
+            log.warning("Point(s) retiré(s) faute de source valide : %s", " ; ".join(retires))
+        section.points = [p for p in section.points if p.references]
+    synthese.sections = [s for s in synthese.sections if s.points]
     return ResultatSynthese(synthese, articles, debut, fin, client.fournisseur.libelle,
                             client.fournisseur.modele(prod["modele_synthese"]))
 
@@ -113,8 +120,18 @@ th { background:var(--zone); }
 
 
 def _lien_article(a: dict[str, Any], numero: int) -> str:
-    return (f'<a href="{html.escape(a["url"], quote=True)}">{html.escape(a["titre"])}</a> '
-            f'<span class="meta">({html.escape(a["source_id"])}, référence {numero})</span>')
+    meta = f'<span class="meta">({html.escape(a["source_id"])}, référence {numero})</span>'
+    if not url_web(a["url"]):  # deuxième barrière : jamais de lien « javascript: » dans un mail
+        return f"{html.escape(a['titre'])} {meta}"
+    return f'<a href="{html.escape(a["url"], quote=True)}">{html.escape(a["titre"])}</a> {meta}'
+
+
+def _lien_md(titre: str, url: str) -> str:
+    """Lien Markdown robuste : crochets du titre et parenthèses de l'URL échappés."""
+    titre = titre.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]").replace("|", "\\|")
+    if not url_web(url):
+        return titre
+    return f"[{titre}]({url.replace(' ', '%20').replace('(', '%28').replace(')', '%29')})"
 
 
 def rendre_html(r: ResultatSynthese, relecteur: str) -> str:
@@ -125,10 +142,8 @@ def rendre_html(r: ResultatSynthese, relecteur: str) -> str:
         points = []
         for p in s.points:
             refs = "".join(f"<li>{_lien_article(r.articles[n - 1], n)}</li>" for n in p.references)
-            points.append(
-                f"<h3>{e(p.titre)}</h3>\n<p>{e(p.texte)}</p>\n"
-                f'<p class="sources-point">Sources :</p>\n<ul class="sources-point">{refs}</ul>'
-            )
+            sources = f'\n<p class="sources-point">Sources :</p>\n<ul class="sources-point">{refs}</ul>' if refs else ""
+            points.append(f"<h3>{e(p.titre)}</h3>\n<p>{e(p.texte)}</p>{sources}")
         sections.append(f"<section>\n<h2>{e(s.theme)}</h2>\n" + "\n".join(points) + "\n</section>")
 
     a_retenir = ""
@@ -188,13 +203,12 @@ def rendre_markdown(r: ResultatSynthese, relecteur: str) -> str:
     for s in r.synthese.sections:
         lignes += [f"## {s.theme}", ""]
         for p in s.points:
-            refs = ", ".join(f"[{r.articles[n - 1]['titre']}]({r.articles[n - 1]['url']})" for n in p.references)
-            lignes += [f"### {p.titre}", "", p.texte, "", f"Sources : {refs}", ""]
+            refs = ", ".join(_lien_md(r.articles[n - 1]["titre"], r.articles[n - 1]["url"]) for n in p.references)
+            lignes += [f"### {p.titre}", "", p.texte, ""] + ([f"Sources : {refs}", ""] if refs else [])
     lignes += ["## Publications analysées", "", "| N° | Publication | Catégorie | Pertinence |",
                "|---|---|---|---|"]
     for i, a in enumerate(r.articles, start=1):
-        titre = a["titre"].replace("|", "\\|")
-        lignes.append(f"| {i} | [{titre}]({a['url']}) ({a['source_id']}) | "
+        lignes.append(f"| {i} | {_lien_md(a['titre'], a['url'])} ({a['source_id']}) | "
                       f"{LIBELLES_CATEGORIE.get(a['categorie'], a['categorie'])} | {a['pertinence']} sur 5 |")
     lignes += ["", f"> Transparence : synthèse générée par IA ({r.fournisseur}, modèle {r.modele}) à partir de "
                f"sources publiques, relue par {relecteur}."]

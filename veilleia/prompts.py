@@ -9,6 +9,7 @@ est ensuite validée par un schéma strict (schemas.py).
 
 from __future__ import annotations
 
+import re
 from collections.abc import Sequence
 from typing import Any
 
@@ -61,11 +62,13 @@ Réponds UNIQUEMENT avec un objet JSON valide :
 N'inclus une section que si elle contient au moins un point. Commence par la réglementation."""
 
 
+_BALISE_DONNEES = re.compile(r"<\s*(/?)\s*(publications?)\s*>", re.IGNORECASE)
+
+
 def neutraliser(texte: str) -> str:
-    """Empêche le contenu de fermer la balise de données ou d'en ouvrir une nouvelle."""
-    for balise in ("publication", "publications"):
-        texte = texte.replace(f"</{balise}>", f"</ {balise}>").replace(f"<{balise}>", f"< {balise}>")
-    return texte
+    """Empêche le contenu de fermer la balise de données ou d'en ouvrir une nouvelle, quelle que soit
+    l'écriture utilisée (</Publication>, </publication >…) : toutes deviennent « </ publication> »."""
+    return _BALISE_DONNEES.sub(lambda m: f"<{m.group(1)} {m.group(2).lower()}>", texte)
 
 
 def messages_analyse(themes: str, titre: str, source: str, contenu: str) -> list[dict[str, str]]:

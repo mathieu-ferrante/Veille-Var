@@ -34,9 +34,11 @@ CODES_A_REESSAYER = {408, 409, 425, 429, 500, 502, 503, 504}
 class ErreurServiceIA(Exception):
     """Échec définitif d'un appel au service d'IA."""
 
-    def __init__(self, message: str, code_http: int | None = None, json_invalide: bool = False) -> None:
+    def __init__(self, message: str, code_http: int | None = None, json_invalide: bool = False,
+                 tentatives: int | None = None) -> None:
         super().__init__(message)
         self.code_http = code_http
+        self.tentatives = tentatives  # nombre réel d'essais effectués (journalisé pour le monitorage)
         # Vrai si le service a bien répondu mais que la réponse ne respecte pas le schéma (mesure F4).
         # Faux pour les erreurs de service (quota, réseau, accès) : le modèle n'a pas pu répondre.
         self.json_invalide = json_invalide
@@ -129,10 +131,12 @@ class ClientIA:
 
         url = f"{f.base_url}/chat/completions"
         derniere_erreur, code = "", None
-        debut = time.perf_counter()
         for essai in range(1, self.tentatives + 1):
             try:
-                debut += self._respecter_debit()  # l'attente volontaire n'est pas de la latence du service
+                self._respecter_debit()
+                # Latence = durée de la requête qui aboutit : ni l'attente volontaire (limite de débit) ni les
+                # pauses entre tentatives n'en font partie (le nombre de tentatives est journalisé à part).
+                debut = time.perf_counter()
                 r = self.http.post(url, json=corps)
                 code = r.status_code
                 if r.status_code in CODES_A_REESSAYER and essai < self.tentatives:
@@ -140,7 +144,8 @@ class ClientIA:
                     self._patienter(essai, r.headers.get("retry-after"))
                     continue
                 if r.status_code >= 400:
-                    raise ErreurServiceIA(f"HTTP {r.status_code} : {masquer_secrets(r.text[:300])}", r.status_code)
+                    raise ErreurServiceIA(f"HTTP {r.status_code} : {masquer_secrets(r.text[:300])}", r.status_code,
+                                          tentatives=essai)
                 donnees = r.json()
                 latence = time.perf_counter() - debut
                 usage = donnees.get("usage") or {}
@@ -161,8 +166,9 @@ class ClientIA:
                     self._patienter(essai, None)
                     continue
             except (KeyError, IndexError, ValueError) as exc:
-                raise ErreurServiceIA(f"Réponse inattendue du service : {exc}", code) from exc
-        raise ErreurServiceIA(f"Échec après {self.tentatives} tentatives : {derniere_erreur}", code)
+                raise ErreurServiceIA(f"Réponse inattendue du service : {exc}", code, tentatives=essai) from exc
+        raise ErreurServiceIA(f"Échec après {self.tentatives} tentatives : {derniere_erreur}", code,
+                              tentatives=self.tentatives)
 
     def completer_json(
         self,
@@ -180,7 +186,7 @@ class ClientIA:
             rep = self.completer(messages, modele, max_tokens, temperature, json_attendu=True, tache=tache)
         except ErreurServiceIA as exc:
             self._journaliser(tache, nom_modele, "erreur", exc.code_http, time.perf_counter() - debut,
-                              None, None, None, self.tentatives, str(exc))
+                              None, None, None, exc.tentatives or self.tentatives, str(exc))
             raise
         try:
             resultat = schema.model_validate(extraire_json(rep.texte))

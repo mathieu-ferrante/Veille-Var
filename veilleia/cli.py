@@ -16,7 +16,7 @@ from __future__ import annotations
 import argparse
 import logging
 import sys
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 from .analyse import analyser_en_attente
 from .benchmark import constituer_jeu_test, lancer_benchmark
@@ -78,9 +78,29 @@ def cmd_analyser(config: Config, stockage: Stockage, args: argparse.Namespace) -
     return 0 if bilan["erreurs"] == 0 else 1
 
 
+def date_de_fin(valeur: str | None) -> datetime | None:
+    """Interprète --fin. Une date seule (AAAA-MM-JJ) inclut toute la journée indiquée ; un fuseau fourni
+    est respecté, sinon UTC."""
+    if not valeur:
+        return None
+    try:
+        dt = datetime.fromisoformat(valeur)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(f"date de fin invalide : {valeur!r} (format AAAA-MM-JJ)") from exc
+    if len(valeur) == 10:  # date sans heure : fin de journée
+        dt += timedelta(days=1, seconds=-1)
+    return dt if dt.tzinfo else dt.replace(tzinfo=UTC)
+
+
+def entier_positif(valeur: str) -> int:
+    n = int(valeur)
+    if n < 0:
+        raise argparse.ArgumentTypeError("doit être positif ou nul")
+    return n
+
+
 def cmd_synthetiser(config: Config, stockage: Stockage, args: argparse.Namespace) -> int:
-    fin = datetime.fromisoformat(args.fin).replace(tzinfo=UTC) if getattr(args, "fin", None) else None
-    debut, fin = periode_par_defaut(fin, getattr(args, "jours", 7))
+    debut, fin = periode_par_defaut(getattr(args, "fin", None), getattr(args, "jours", 7))
     client = _client(config, stockage, args.fournisseur)
     try:
         resultat = generer_synthese(client, config, stockage, debut, fin)
@@ -123,10 +143,14 @@ def cmd_hebdo(config: Config, stockage: Stockage, args: argparse.Namespace) -> i
     """Chaîne complète. Une étape en échec n'empêche pas le monitorage, qui doit justement la signaler."""
     codes = []
     for etape in (cmd_collecter, cmd_analyser, cmd_synthetiser):
+        nom = getattr(etape, "__name__", "etape").removeprefix("cmd_")
         try:
             codes.append(etape(config, stockage, args))
         except ErreurServiceIA as exc:
-            log.error("Étape %s en échec : %s", etape.__name__.removeprefix("cmd_"), exc)
+            log.error("Étape %s en échec : %s", nom, exc)
+            codes.append(1)
+        except Exception:  # erreur imprévue (fichier, réseau…) : on la trace et on poursuit jusqu'au monitorage
+            log.exception("Étape %s en échec (erreur inattendue)", nom)
             codes.append(1)
     codes.append(cmd_monitoring(config, stockage, args))
     return max(codes)
@@ -142,14 +166,14 @@ def construire_parseur() -> argparse.ArgumentParser:
     sp.add_parser("sources", help="Lister les sources actives")
     sp.add_parser("collecter", help="Collecter les flux RSS")
     a = sp.add_parser("analyser", help="Analyser les publications non traitées")
-    a.add_argument("--limite", type=int, help="Nombre maximum de publications à analyser")
+    a.add_argument("--limite", type=entier_positif, help="Nombre maximum de publications à analyser")
     for nom in ("synthetiser", "hebdo"):
         s = sp.add_parser(nom, help="Produire la synthèse" if nom == "synthetiser" else "Chaîne complète")
         s.add_argument("--jours", type=int, default=7, help="Durée de la période (défaut 7)")
-        s.add_argument("--fin", help="Date de fin AAAA-MM-JJ (défaut : maintenant)")
+        s.add_argument("--fin", type=date_de_fin, help="Date de fin AAAA-MM-JJ, journée incluse (défaut : maintenant)")
         s.add_argument("--envoyer", action="store_true", help="Envoyer la synthèse par mail (SMTP_* dans .env)")
         if nom == "hebdo":
-            s.add_argument("--limite", type=int)
+            s.add_argument("--limite", type=entier_positif)
     sp.add_parser("monitoring", help="Indicateurs, alertes et tableau de bord")
     j = sp.add_parser("jeu-test", help="Constituer le jeu de test du benchmark (à annoter)")
     j.add_argument("--taille", type=int, default=30)

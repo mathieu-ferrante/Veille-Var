@@ -1,4 +1,4 @@
-# Planifie l'exécution hebdomadaire de VeilleIA (Planificateur de tâches Windows).
+﻿# Planifie l'exécution hebdomadaire de VeilleIA (Planificateur de tâches Windows).
 # Collecte + analyse + synthèse + monitorage chaque mercredi à 18 h, pour que la
 # synthèse soit prête au créneau de veille du jeudi 9 h – 10 h.
 #

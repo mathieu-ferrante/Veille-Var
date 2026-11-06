@@ -18,6 +18,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
+from .collecte import charger_sources
 from .config import Config
 from .stockage import Stockage
 
@@ -67,6 +68,14 @@ def percentile(valeurs: list[float], p: float) -> float | None:
     return v[int(k)] if bas == haut else v[bas] + (v[haut] - v[bas]) * (k - bas)
 
 
+def _sources_actives(config: Config) -> list[str] | None:
+    """Identifiants des sources actives de sources.yaml (None si le fichier est illisible : pas de filtre)."""
+    try:
+        return [s.id for s in charger_sources(config.chemin(config.collecte["fichier_sources"]))]
+    except (OSError, ValueError, TypeError, KeyError):
+        return None
+
+
 def calculer_indicateurs(config: Config, stockage: Stockage) -> tuple[list[Indicateur], dict]:
     conf = config.monitorage
     seuils = conf["seuils"]
@@ -82,7 +91,7 @@ def calculer_indicateurs(config: Config, stockage: Stockage) -> tuple[list[Indic
     # Une synthèse ratée est noyée dans le taux d'erreur global (1 appel sur ~150) : indicateur dédié.
     syntheses = [a for a in appels_prod if a["tache"] == "synthese"]
     derniere_synthese_ko = float(syntheses[-1]["statut"] != "ok") if syntheses else None
-    collectes = [dict(c) for c in stockage.derniere_collecte_par_source()]
+    collectes = [dict(c) for c in stockage.derniere_collecte_par_source(_sources_actives(config))]
     sources_ko = [c for c in collectes if c["statut"] != "ok"]
 
     indicateurs = [

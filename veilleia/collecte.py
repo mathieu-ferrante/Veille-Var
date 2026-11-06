@@ -9,6 +9,7 @@ import re
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from urllib.parse import urlparse
 
 import feedparser
 import httpx
@@ -64,6 +65,13 @@ def date_francaise(texte: str) -> datetime | None:
     return datetime(int(m.group(3)), _MOIS_FR[m.group(2).lower()], int(m.group(1)), tzinfo=UTC)
 
 
+def url_web(url: str) -> bool:
+    """Vrai seulement pour un lien http(s) complet : un flux piégé ne peut pas injecter un lien
+    « javascript: » ou « data: » dans la synthèse diffusée par mail."""
+    p = urlparse(url)
+    return p.scheme in ("http", "https") and bool(p.netloc)
+
+
 def _date_entree(entree: feedparser.FeedParserDict) -> datetime | None:
     for cle in ("published_parsed", "updated_parsed"):
         t = entree.get(cle)
@@ -86,10 +94,10 @@ def parser_flux(source: Source, contenu: bytes, jours_max: int, max_par_source: 
     flux = feedparser.parse(contenu)
     articles: list[Article] = []
     for entree in flux.entries:
-        url = entree.get("link")
+        url = (entree.get("link") or "").strip()
         titre = texte_brut(entree.get("title", ""))
-        if not url or not titre:
-            continue
+        if not titre or not url_web(url):
+            continue  # lien absent ou non web (ex. « javascript: ») : jamais repris dans une synthèse
         date = _date_entree(entree)
         if date and date < limite:
             continue  # trop ancien : on ne l'envoie pas au modèle (sobriété)

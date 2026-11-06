@@ -56,6 +56,13 @@ Option globale `--fournisseur <id>` pour utiliser ponctuellement un autre servic
 | `tests/` | Tests automatisés (sans appel réel au service) | C8 |
 | `config.yaml`, `sources.yaml` | Paramétrage et sources | C8 |
 
+## Service retenu
+
+Le benchmark (`benchmark/README.md`) recommande **Mistral AI** (score pondéré 4,55/5), via le point
+d'accès européen `api.eu.mistral.ai` : `ministral-8b-latest` pour l'analyse, `mistral-large-4` pour la
+synthèse. Solution de repli déjà configurée et testée : modèle local **Ollama + gemma3:12b**
+(`veilleia --fournisseur ollama hebdo`). Coût mesuré en production : environ 0,04 $ par semaine.
+
 ## Choix techniques
 
 - **Un seul connecteur** pour tous les fournisseurs, via l'interface « chat completions » compatible
@@ -73,6 +80,6 @@ Option globale `--fournisseur <id>` pour utiliser ponctuellement un autre servic
 ## Tests
 
 ```bash
-pytest          # 34 tests
+pytest          # 56 tests
 ruff check .    # qualité et sécurité
 ```

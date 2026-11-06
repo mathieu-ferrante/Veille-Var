@@ -8,6 +8,10 @@ Le benchmark compare les services d'IA capables de réaliser les fonctionnalité
 2. **Des tests réels et chiffrés** sur un jeu de 30 publications annotées à la main, avec le même
    prompt et les mêmes paramètres pour chaque service.
 
+Le jeu de test (`jeu_test.json`, annoté le 06/11/2026) a été tiré le 05/11/2026, avant la sélection
+définitive des sources : il contient aussi 4 publications de CERT-FR et d'ActuIA, sources écartées
+ensuite de la collecte. Elles sont conservées : elles diversifient le jeu et comportent des cas limites.
+
 ### Services testés et services étudiés sur documentation
 
 | Service | Volet | Raison |

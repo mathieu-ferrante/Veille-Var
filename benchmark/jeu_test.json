@@ -10,9 +10,9 @@
       "date_pub": "2026-10-30T09:13:58+00:00",
       "contenu": "OpenAI et Anthropic disent que leurs IA ont réfuté une conjecture clé de l'informatique théorique",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 2,
+        "commentaire": "Avancée de recherche, pas d'impact direct"
       }
     },
     {
@@ -23,9 +23,9 @@
       "date_pub": "2026-11-03T07:31:14+00:00",
       "contenu": "Welcome to The EU AI Act Conversations , a podcast with Risto Uuk exploring the implementation, enforcement and impact of Europe’s AI law. Maximilian Henning is a Brussels-based tech reporter covering artificial intelligence policy. He joins Risto Uuk to discuss how journalists investigate the AI Act and its implementation. Their conversation explores how leaked documents shape EU tech policy, early European Commission inquiries into frontier AI developers, and the shift towards specialised subscription newsletters. They also examine why member-state enforcement often escapes scrutiny, alongside persistent debates about regulation and European competitiveness. LINKS: Rapporteur The Hack Topic Page EU Orders AI Security Disclosures Hungary Pitches Embedding Safety Teams China Invites EU AI Alliance OpenAI Unreported EU Safety Incident Setting Up EU AI Testers CHAPTERS: (00:00) Episode preview (00:59) Covering EU tech policy (05:08) The changing media ecosystem (09:51) Debating AI industry terminology (12:46) Deciding what to cover (17:49) Overlooking prohibited AI practices (25:09) Shifting AI Act narratives (29:32) Leaks and Commission enforcement PRODUCED BY: https://aipodcast.ing LISTEN ON: YouTube Spotify Apple Podcasts Transcript This transcript was generated automatically and may contain errors in wording or speaker identification. Please listen to the episode to verify key details. Risto Uuk: My guest today is Maximilian Henning. He's a tech reporter at Rapporteur in Brussels. Previous Rapporteur was called Euractiv, where he covers AI, startups, and digital administration. Maximilian has been writing about EU tech policy since 2023, so he has followed the AI Act from the final stages of the negotiations through the omnibus debates, and now into enforcement, that we are following closely. I often speak with policymakers who are directly writing legislation, they're enforcing the AI Act. I don't often speak with journalists like yourself on a podcast. But yeah, this time I wanted to hear from somebody who really follows the discussion very closely from the outside. Also, Maximilian recently revealed the Hungarian non-paper, where Hungary called for placing EU safety teams inside frontier companies. Welcome to the EU AI Conversations. Maximilian Henning: Thanks very much for the invitation. Happy to be here. Risto Uuk: How did you get involved in journalism? How did you get to cover tech policy and all these topics all the way to the EU AI Act? Maximil",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "reglementaire",
+        "pertinence": 3,
+        "commentaire": "Contexte utile sur l'application de l'AI Act"
       }
     },
     {
@@ -36,9 +36,9 @@
       "date_pub": "2026-11-02T00:00:00+00:00",
       "contenu": "Ce bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des...",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 3,
+        "commentaire": "Sécurité des SI, mais pas d'IA"
       }
     },
     {
@@ -49,9 +49,9 @@
       "date_pub": "2026-10-29T12:00:00+00:00",
       "contenu": "Le 22 octobre 2026, la CNIL a sanctionné les sociétés FNAC DARTY PARTICIPATIONS ET SERVICES et FNAC DIRECT d’une amende de 7&nbsp;millions d’euros pour non-respect des règles applicables en matière de traceurs (cookies).",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "reglementaire",
+        "pertinence": 3,
+        "commentaire": "RGPD : rappel des règles cookies, valable pour les sites du Département"
       }
     },
     {
@@ -62,9 +62,9 @@
       "date_pub": "2026-11-04T10:10:00+00:00",
       "contenu": "Call for evidence on advertising repositories Anonymous (not verified) Wed, 11/04/2026 - 11:10 Opening: 04 November 2026 Closing: 02 December 2026 The Commission is seeking feedback on upcoming technical guidelines concerning advertising repositories under the Digital Services Act (DSA). The feedback is being gathered through a call for evidence . The responses collected through the call for evidence will help shape guidelines aimed at ensuring that advertising repositories meet the needs of their users. Amongst other things, the guidelines will advise on: how to make advertising repositories easily searchable how to provide insights on how users are targeted and reached how to make the content of advertisements accessible Once adopted, these guidelines will aim to ensure that the advertising repositories provided by very large online platforms (VLOPs) and very large online search engines (VLOSEs) are effective and fit for purpose. Effective advertising repositories are essential tools for enabling greater public scrutiny of online advertising. Transparency in advertising – revealing who pays and how citizens are targeted – helps to protect public health, ensure a high level of consumer protection and safeguard the integrity of elections. Advertising repositories also support effective supervision and enforcement of the DSA. Next steps The call for evidence will be followed by a targeted public consultation in 2027. Researchers, civil society, providers of VLOPs and VLOSEs and representatives from the advertising industry will be invited to share feedback on a draft version of the guidelines. The publication of the guidelines is planned for the second quarter of 2028. Background Under Article 39 of the DSA, providers of VLOPs and VLOSEs are required to maintain publicly accessible repositories of advertisements displayed on their services. These repositories (commonly known as ‘ad libraries’) provide information on the content of advertisements, who paid for them, the period during which they were displayed, how many users the advertisements reached, and the main criteria used to decide who saw the advertisements. Article 39(3) of the DSA provides the possibility for the Commission to issue guidelines on the design of advertising repositories, following consultation with the European Board for Digital Services , researchers and the public. The guidelines will support the Commission’s supervision and enforcement of VLOPs and VLOSEs’ compliance with Article ",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "reglementaire",
+        "pertinence": 2,
+        "commentaire": "Réglementaire mais concerne les plateformes, pas une collectivité"
       }
     },
     {
@@ -75,9 +75,9 @@
       "date_pub": "2026-11-02T17:45:00+00:00",
       "contenu": "Here are Google’s latest AI updates from October 2026",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "offre_outil",
+        "pertinence": 2,
+        "commentaire": "Annonces commerciales d'un fournisseur étudié"
       }
     },
     {
@@ -88,9 +88,9 @@
       "date_pub": "2026-11-03T13:36:58+00:00",
       "contenu": "Evaluez votre système d'information avec le Benchmark Green IT en 2027",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "offre_outil",
+        "pertinence": 3,
+        "commentaire": "Démarche de sobriété applicable à la DSI"
       }
     },
     {
@@ -101,9 +101,9 @@
       "date_pub": "2026-10-29T00:00:00+00:00",
       "contenu": "",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 4,
+        "commentaire": "Modèle européen open-weight : enjeu de souveraineté"
       }
     },
     {
@@ -114,9 +114,9 @@
       "date_pub": "2026-10-30T00:00:00+00:00",
       "contenu": "Protection des droits des électeurs, ingérences étrangères… lundi 16 novembre 2026, à partir de 14 h, la CNIL vous invite à son événement dédié aux enjeux éthiques associés aux communications politiques et aux ingérences. Les inscriptions sont ouvertes.",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "reglementaire",
+        "pertinence": 2,
+        "commentaire": "Événement, intérêt indirect"
       }
     },
     {
@@ -127,9 +127,9 @@
       "date_pub": "2026-11-05T10:45:46+00:00",
       "contenu": "Google se retrouve face à un défi qu’il a lui-même créé. Depuis plusieurs années, le groupe accélère (...)",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "offre_outil",
+        "pertinence": 1,
+        "commentaire": "Actualité business, aucun impact pour le Département"
       }
     },
     {
@@ -140,9 +140,9 @@
       "date_pub": "2026-11-05T12:00:14+00:00",
       "contenu": "Build and deploy enterprise agents, workflows and apps faster with Mistral Studio and Le Chonk full control over your models, data and infrastructure.",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "offre_outil",
+        "pertinence": 4,
+        "commentaire": "Offre d'un fournisseur testé, avec contrôle des données"
       }
     },
     {
@@ -153,9 +153,9 @@
       "date_pub": "2026-11-04T08:37:00+00:00",
       "contenu": "OpenAI mais pas open bar Selon l’avocat général de la CJUE, le scraping et la réutilisation de publications de presse en ligne par les chatbots IA pour générer des réponses doivent respecter certains critères, et notamment qu’elles aient été obtenues légalement (donc sans passer outre un paywall), mais aussi que le chatbot ne réutilise pas le style utilisé dans l’article. La presse européenne est suspendue au sort qui sera réservé à l’affaire qui oppose l’éditeur hongrois Like Compagny à Google. C’est, selon le communiqué de presse [ PDF ] de la Cour de justice de l’Union européenne (CJUE), la première affaire relative à l’IA générative portée devant elle. Et l’avocat général à la Cour, Maciej Szpunar, vient de rendre ses conclusions . Rappelons qu’il doit donner un éclairage à la Cour mais que celle-ci n’est pas liée à ses conclusions. Les juges commencent tout juste à délibérer dans cette affaire et leur arrêt sera rendu ultérieurement. Mais le regard de l’avocat général permet de mieux cerner les enjeux de cette décision. En l’occurrence, devant la Cour régionale de Budapest, Like Compagny accuse Google (en fait, sa maison mère, Alphabet) d’avoir violé les droits qu’elle possède sur les articles publiés sur le site Balaton Környéke en les utilisant entre juin 2023 et juin 2024, sans son accord, pour entrainer ses modèles, mais aussi dans son processus de RAG (pour retrieval-augmented generation ) afin de générer des réponses aux utilisateurs de son chatbot Gemini en allant les chercher sur le web. Elle l’accuse aussi d’avoir « reproduit » ces articles et de les avoir « rendus accessibles » aux utilisateurs du chatbot. Dis Next, c’est quoi un « RAG » en IA générative ? Avant de statuer, cette cour hongroise a voulu consulter la Cour de justice de l’Union européenne pour vérifier comment le droit européen encadre ce genre de problèmes. Elle lui a demandé si le processus d’entrainement d’un modèle de langage peut être considéré comme un acte de reproduction illicite ou si il relève de l’exception au « text and data mining » que la loi européenne permet. La Cour hongroise a aussi interrogé la CJUE sur la reproduction des articles de presse par les chatbots. Pas de preuve d’utilisation pour l’entrainement, pas de question L’avocat général Maciej Szpunar demande à la CJUE d’évacuer les questions sur l’entrainement du modèle de langage avec les textes de Like Compagny car il considère qu’elles ne sont pas recevables. Pour lui, l’entreprise hongroise ne donne p",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "reglementaire",
+        "pertinence": 3,
+        "commentaire": "Jurisprudence européenne sur l'IA, intérêt juridique"
       }
     },
     {
@@ -166,9 +166,9 @@
       "date_pub": "2026-10-29T17:00:00+00:00",
       "contenu": "OpenAI’s updated Model Spec outlines five core values to guide more capable AI toward sound judgment, human agency, and faithfulness to human intent.",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 2,
+        "commentaire": "Principes de conception d'un fournisseur"
       }
     },
     {
@@ -179,9 +179,9 @@
       "date_pub": "2026-11-01T16:49:04+00:00",
       "contenu": "More broadly, the use of LLMs erodes trust in documentation, in software, and in the organizations which produce them. Perhaps engineers will begin to treat any new software project with suspicion—the signals we used to rely on as markers of a mature system are now easier to counterfeit. [...] In the age of LLMs, what can maintainers do to ensure correct software and accurate documentation? Having done that work, how can they demonstrate its quality to users? — Kyle Kingsbury , Jepsen results for ParticleDB 1.1.4 Tags: kyle-kingsbury , llms , ai , generative-ai , ai-misuse",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 2,
+        "commentaire": "Réflexion sur la qualité logicielle"
       }
     },
     {
@@ -192,9 +192,9 @@
       "date_pub": "2026-10-30T09:46:11+00:00",
       "contenu": "Un chercheur d'Anthropic signe une faille sur dix corrigée par Chrome en octobre",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 2,
+        "commentaire": "IA et recherche de vulnérabilités"
       }
     },
     {
@@ -205,9 +205,9 @@
       "date_pub": "2026-11-05T12:00:00+00:00",
       "contenu": "La CNIL publie une recommandation relative aux outils de rejeu de session permettant le suivi et l'analyse du comportement en ligne des utilisateurs. L’objectif est d’aider les acteurs qui conçoivent ces outils et ceux qui les utilisent dans leur mise en conformité.",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "reglementaire",
+        "pertinence": 4,
+        "commentaire": "S'applique directement si les sites du Département utilisent ces outils"
       }
     },
     {
@@ -218,9 +218,9 @@
       "date_pub": "2026-10-29T08:12:20+00:00",
       "contenu": "Local Digital Twins CiTiVERSE EDIC joins Smart City Expo World Congress 2026 Anonymous (not verified) Thu, 10/29/2026 - 09:12 03 November 2026 - 05 November 2026 Fira de Barcelona, Hall 3, Stand D71 Explore human-centric AI solutions for smart cities with the LDT CiTiVERSE EDIC at Smart City Expo World Congress 2026. The Local Digital Twin (LDT) CiTiVERSE European Digital Infrastructure Consortium (EDIC) is – together with city, regional and industrial stakeholders – showcasing AI solutions for liveable cities and communities in a pavilion at Smart City Expo World Congress 2026 . There, visitors can see and experience how digital twins, data and immersive technologies work in practice. Aligned with the Apply AI Strategy , these solutions show how responsible AI can strengthen governance, public services and quality of life. This event is part of the European AI Innovation Month , an initiative promoting a series of events showcasing AI innovation and adoption across Europe. Find more details about the LDT CiTiVERSE EDIC at the Smart City Expo World Congress 2026 . The LDT CiTiVERSE EDIC is building an EU ecosystem of advanced AI solutions for cities. It brings cities and communities together to explore AI resources to improve decision-making and address major shared societal challenges.Anchored in a balanced and empowered social fabric, this initiative showcaseshow human-centric AI and Local Digital Twins can be translated into practical, replicable solutions for cities. Find out more about the EU work on AI for liveable cities . Related topics Events Artificial intelligence Europe's Digital Decade European Digital Infrastructure Consortium",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 3,
+        "commentaire": "Initiative européenne qui concerne les collectivités"
       }
     },
     {
@@ -231,9 +231,9 @@
       "date_pub": "2026-11-03T17:15:21+00:00",
       "contenu": "",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 2,
+        "commentaire": "Recherche sur l'évaluation des modèles"
       }
     },
     {
@@ -244,9 +244,9 @@
       "date_pub": "2026-11-05T16:18:41+00:00",
       "contenu": "Pangram a annoncé le 4 novembre 2026 le lancement de deux nouveaux modèles de détection, Pangram Image 1.0 et Pangram Image Flash (...)",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "offre_outil",
+        "pertinence": 2,
+        "commentaire": "Nouveau produit"
       }
     },
     {
@@ -257,9 +257,9 @@
       "date_pub": "2026-10-29T12:00:07+00:00",
       "contenu": "The weights of Mistral Large 4 (Le Chonk) are now open. A 1T parameter multimodal model, and best open-weight model for coding, trained in Europe.",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 4,
+        "commentaire": "Modèle européen ouvert, entraîné en Europe : souveraineté"
       }
     },
     {
@@ -270,9 +270,9 @@
       "date_pub": "2026-11-05T07:30:46+00:00",
       "contenu": "Dans la jungle, terrible jungle Avec les prochaines versions d’iOS et de macOS, Safari s’offrira plusieurs nouvelles fonctions importantes : les onglets verticaux, un mode sombre adaptatif qui va mettre à la retraite plusieurs extensions, et une nouvelle dose de Siri AI. Là où les éditeurs de navigateurs web empilent les nouvelles fonctions et les modifications à toute vitesse, Apple a toujours conservé un train de sénateur pour Safari. La position privilégiée que le logiciel occupe dans les systèmes d’exploitation du constructeur lui permet de vivre une petite vie assez tranquille, loin de la frénésie de la concurrence. Mais il arrive aussi parfois, au détour d’une mise à jour discrète, qu’Apple décide de faire soudainement un petit effort. La version 27.3 contient non pas une, pas deux mais trois nouveautés importantes ! Pour en profiter, il faudra au préalable télécharger et installer iOS 27.3, iPadOS 27.3 et macOS 27.3 . Oui, chez Apple, pour pouvoir utiliser une poignée de nouveautés dans un navigateur, il faut impérativement lancer les grandes manœuvres sur ses machines et les mettre à jour. Ces nouvelles versions des systèmes d’exploitation sont actuellement proposées en bêta pour les développeurs. Sur Mac, avec un peu de chance, le constructeur livrera peut-être une version autonome de Safari 27.3 quand la mouture finale de macOS 27.3 sera disponible. Un mode sombre pour les sites qui n’en ont pas La première nouveauté est un mode sombre adaptatif, qui bascule la page web en mode sombre lorsque l’affichage du smartphone, de la tablette ou de l’ordinateur est lui-même en mode sombre. Bien sûr, les feuilles de styles des sites web peuvent adapter les couleurs de leurs pages en fonction du mode de la machine. Mais ce n’est pas le cas de tous : en se basant sur des stats de Google, Apple relève que près de 40 % des pages sont chargées par des internautes ayant activé le mode sombre, mais seuls 10 % des chargements concernent des pages qui le prennent en charge. Lorsque Safari 27.3 affiche un site web incompatible avec le monde sombre, il affiche en haut de page une invitation à activer le mode adaptatif. Attention, des éléments peuvent alors manquer de contraste, les couleurs peuvent paraître « différentes », et certains sites ne sont pas compatibles. Apple explique que ce mode inverse la luminosité des couleurs tout en préservant leurs teintes : les fonds clairs deviennent sombres, et les textes foncés s’éclaircissent, avec un contraste d’au moins 4,5",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "hors_sujet",
+        "pertinence": 1,
+        "commentaire": "Navigateur grand public"
       }
     },
     {
@@ -283,9 +283,9 @@
       "date_pub": "2026-10-30T00:00:00+00:00",
       "contenu": "OpenAI shares excerpts from court briefs by creators, academics, accessibility advocates, and legal experts, among others, on how fair use supports AI training and innovation.",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "reglementaire",
+        "pertinence": 2,
+        "commentaire": "Droit américain, intérêt indirect"
       }
     },
     {
@@ -296,9 +296,9 @@
       "date_pub": "2026-11-04T00:29:36+00:00",
       "contenu": "Release: datasette-apps 0.3a0 Datasette Apps adds support for hosting and editing custom HTML applications inside of Datasette. These can be created by hand, but it's easier to create them using LLMs via Datasette Agent . This release improves that integration: Apps can now be tagged in Datasette Agent chat messages by typing # , which autocompletes from the apps the user has permission to view. New app_add_stored_queries() and app_remove_stored_queries() tools let the agent manage which stored queries an app is allowed to call. Granting a write query requires approval from the user first. app_create() now checks that each requested stored query exists and that the user can view it, and asks the user to approve any write queries before the app is created. The \"View app\" buttons shown by the agent tools, and the links on # app references, now open the app full screen in the Datasette Agent panel. Tags: datasette , datasette-agent , datasette-apps",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 1,
+        "commentaire": "Outil de niche"
       }
     },
     {
@@ -309,9 +309,9 @@
       "date_pub": "2026-10-30T10:23:24+00:00",
       "contenu": "Cloud : au troisième trimestre, seul Microsoft a payé ses investissements avec sa trésorerie",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "hors_sujet",
+        "pertinence": 1,
+        "commentaire": "Finance du cloud, pas d'IA ni d'impact"
       }
     },
     {
@@ -322,9 +322,9 @@
       "date_pub": "2026-11-05T12:00:00+00:00",
       "contenu": "Lorsque vous naviguez sur Internet ou que vous utilisez une application sur votre téléphone, vos actions peuvent être enregistrées par ce que l’on appelle des outils de rejeu de session. À quoi servent-ils et quels sont vos droits&nbsp;?",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "reglementaire",
+        "pertinence": 3,
+        "commentaire": "Version grand public du n° 16"
       }
     },
     {
@@ -335,9 +335,9 @@
       "date_pub": "2026-11-03T10:49:00+00:00",
       "contenu": "Call for proposals: EU AI Media Platform – Modular multilingual public-interest infrastructure for European news and audiovisual media (IA) - Apply AI Anonymous (not verified) Tue, 11/03/2026 - 11:49 Opening: 20 October 2026 Closing: 16 February 2027 This call will support pilots for AI-enabled media infrastructures, fostering research and innovation in the European media sector. Main link https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportuni… Related topics Research and innovation Media and democracy Audiovisual & Media Services Audiovisual and media content distribution Multimedia actions Artificial intelligence EU funding for digital",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "offre_outil",
+        "pertinence": 2,
+        "commentaire": "Financement européen, ne vise pas les collectivités"
       }
     },
     {
@@ -348,9 +348,9 @@
       "date_pub": "2026-10-29T00:00:00+00:00",
       "contenu": "",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "technique",
+        "pertinence": 2,
+        "commentaire": "Modèles spécialisés"
       }
     },
     {
@@ -361,9 +361,9 @@
       "date_pub": "2026-11-04T08:12:28+00:00",
       "contenu": "Au troisième trimestre 2026, Amazon a engagé 75,9 Md$ de dépenses d’investissement cash, Alphabet 51,4 Md$ de CapEx, (...)",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "offre_outil",
+        "pertinence": 1,
+        "commentaire": "Actualité financière"
       }
     },
     {
@@ -374,9 +374,9 @@
       "date_pub": "2026-11-03T17:04:50+00:00",
       "contenu": "Bid terms L’administration Trump a licencié un tiers des employés de l’agence fédérale chargée de la cybersécurité, et systématiquement démantelé l’expertise accumulée notamment en matière de sécurité électorale. La CISA ne communique même pas sur les midterms, et sa nouvelle stratégie censée « sécuriser l’Amérique pour les 250 prochaines années » ne tient que sur 3 pages. Créée en 2018, la Cybersecurity and Infrastructure Security Agency (CISA), le bras cyber du Department of Homeland Security (DHS), était « un partenaire fédéral de premier plan pour les États en matière d’efforts de sécurité électorale après les élections de 2016 », raconte le New York Times . L’agence « [partageait] les meilleures pratiques en matière de cybersécurité et des renseignements sur les intentions étrangères autour des élections ». Sauf que Donald Trump ne supporte pas que la CISA ose contredire ses affirmations selon lesquelles l’élection présidentielle de 2020 a été truquée et qu’il l’avait emportée, comme nous l’avions déjà raconté . La CISA avait notamment cosigné un communiqué expliquant que « les élections du 3 novembre ont été les plus sûres de l’histoire des États-Unis » et qu’« il n’existe aucune preuve qu’un système de vote ait effacé ou perdu des votes, modifié des votes ou ait été compromis de quelque manière que ce soit ». La CISA avait alors lancé une campagne de lutte contre les rumeurs et la désinformation, « Rumor control ». Elle débunkait les rumeurs liées aux élections, dont les « fake news » complotistes colportées par Donald Trump et ses soutiens MAGA qui, en retour, l’accusaient de « censure ». Quelques jours plus tard, Chris Krebs , son directeur, précisait sur Twitter que « 59 experts en sécurité électorale sont tous d’accord pour dire que « dans tous les cas dont nous avons connaissance, ces affirmations (de fraude) n’ont pas été étayées ou sont techniquement incohérentes » ». En réponse, Donald Trump annonçait sur le même réseau social que le patron de la CISA était viré, au motif que sa récente déclaration « sur la sécurité de l’élection de 2020 était très inexacte, en ce sens qu’il y avait des irrégularités et des fraudes massives », accusations qu’il n’a depuis jamais étayées. Krebs avait alors reçu le soutien de Mark Hamill, célèbre pour avoir incarné Luke Skywalker, puis ironisé sur le fait d’avoir été « viré par un tweet ». L’administration Trump voudrait en finir avec la cyberdéfense et privilégier le « hack back » La CISA a perdu environ un t",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "hors_sujet",
+        "pertinence": 1,
+        "commentaire": "Politique américaine"
       }
     },
     {
@@ -387,10 +387,12 @@
       "date_pub": "2026-11-02T18:00:00+00:00",
       "contenu": "OpenAI is raising Security Bug Bounty rewards and introducing report quality, loyalty, and priority campaign bonuses for independent security researchers.",
       "annotation": {
-        "categorie": null,
-        "pertinence": null,
-        "commentaire": ""
+        "categorie": "offre_outil",
+        "pertinence": 1,
+        "commentaire": "Annonce d'un fournisseur, pas d'impact"
       }
     }
-  ]
+  ],
+  "annote_le": "2026-11-06",
+  "annote_par": "Mathieu Ferrante (DSI, point de vue d'un Département)"
 }

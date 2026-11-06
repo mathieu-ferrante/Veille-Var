@@ -44,3 +44,15 @@ def test_injection_de_prompt_neutralisee():
     assert contenu.endswith("</publication>")
     assert "</ publication>" in neutraliser(malveillant)
     assert "DONNÉE" in msgs[0]["content"]
+
+
+def test_listes_trop_longues_tronquees_et_type_inconnu_accepte():
+    # Cas réel du 06/11/2026 : 15 entités renvoyées pour 12 autorisées -> analyse conservée, liste coupée.
+    brut = {**ANALYSE_VALIDE,
+            "mots_cles": [f"mot{i}" for i in range(11)],
+            "entites": [{"type": "organisation", "valeur": f"Org {i}"} for i in range(15)]
+            + [{"type": "indice_boursier", "valeur": "S&P500"}]}
+    a = AnalyseArticle.model_validate(brut)
+    assert len(a.mots_cles) == 8 and len(a.entites) == 12
+    assert AnalyseArticle.model_validate(
+        {**ANALYSE_VALIDE, "entites": [{"type": "indice_boursier", "valeur": "S&P500"}]}).entites[0].type == "autre"

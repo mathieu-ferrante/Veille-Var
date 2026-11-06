@@ -12,9 +12,33 @@ CATEGORIES = ("technique", "reglementaire", "offre_outil", "hors_sujet")
 TYPES_ENTITE = ("modele_ia", "organisation", "texte_juridique", "date", "autre")
 
 
+MAX_MOTS_CLES = 8
+MAX_ENTITES = 12
+MAX_A_RETENIR = 6
+
+
+def _tronquer(v, maximum: int):
+    """Garde les premiers éléments d'une liste trop longue au lieu de rejeter toute l'analyse.
+
+    Un modèle qui cite 15 entités au lieu de 12 a produit une analyse exploitable : on la conserve.
+    """
+    return v[:maximum] if isinstance(v, list) else v
+
+
 class Entite(BaseModel):
     type: Literal["modele_ia", "organisation", "texte_juridique", "date", "autre"]
     valeur: str = Field(min_length=1, max_length=120)
+
+    @field_validator("type", mode="before")
+    @classmethod
+    def normaliser_type(cls, v: str) -> str:
+        v = str(v).strip().lower()
+        return v if v in TYPES_ENTITE else "autre"
+
+    @field_validator("valeur", mode="before")
+    @classmethod
+    def couper_valeur(cls, v: str) -> str:
+        return str(v).strip()[:120]
 
 
 class AnalyseArticle(BaseModel):
@@ -23,8 +47,18 @@ class AnalyseArticle(BaseModel):
     categorie: Literal["technique", "reglementaire", "offre_outil", "hors_sujet"]
     pertinence: int = Field(ge=1, le=5)
     resume: str = Field(min_length=10, max_length=700)
-    mots_cles: list[str] = Field(default_factory=list, max_length=8)
-    entites: list[Entite] = Field(default_factory=list, max_length=12)
+    mots_cles: list[str] = Field(default_factory=list, max_length=MAX_MOTS_CLES)
+    entites: list[Entite] = Field(default_factory=list, max_length=MAX_ENTITES)
+
+    @field_validator("mots_cles", mode="before")
+    @classmethod
+    def limiter_mots_cles(cls, v):
+        return _tronquer(v, MAX_MOTS_CLES)
+
+    @field_validator("entites", mode="before")
+    @classmethod
+    def limiter_entites(cls, v):
+        return _tronquer(v, MAX_ENTITES)
 
     @field_validator("categorie", mode="before")
     @classmethod
@@ -55,8 +89,13 @@ class SyntheseHebdo(BaseModel):
 
     chapeau: str = Field(min_length=20, max_length=900)
     sections: list[SectionSynthese] = Field(min_length=1)
-    a_retenir: list[str] = Field(default_factory=list, max_length=6,
+    a_retenir: list[str] = Field(default_factory=list, max_length=MAX_A_RETENIR,
                                  description="Actions ou points d'attention pour le Département")
+
+    @field_validator("a_retenir", mode="before")
+    @classmethod
+    def limiter_a_retenir(cls, v):
+        return _tronquer(v, MAX_A_RETENIR)
 
 
 class ErreurJSON(ValueError):

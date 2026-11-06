@@ -61,6 +61,7 @@ class ReponseIA:
     latence_s: float
     tentatives: int
     code_http: int
+    fin: str | None = None  # finish_reason : « length » = réponse coupée par max_tokens
 
 
 class ClientIA:
@@ -134,6 +135,7 @@ class ClientIA:
                     latence_s=latence,
                     tentatives=essai,
                     code_http=r.status_code,
+                    fin=donnees["choices"][0].get("finish_reason"),
                 )
             except httpx.TransportError as exc:  # réseau, délai dépassé
                 derniere_erreur = f"{type(exc).__name__}: {exc}"
@@ -165,6 +167,9 @@ class ClientIA:
         try:
             resultat = schema.model_validate(extraire_json(rep.texte))
         except (ErreurJSON, ValidationError) as exc:
+            if rep.fin == "length":  # cause la plus fréquente : plafond de tokens atteint
+                exc = ErreurJSON(f"réponse coupée après {rep.tokens_sortie} tokens : augmenter "
+                                 f"max_tokens_{tache} dans config.yaml ({exc})")
             self._journaliser(tache, rep.modele, "erreur", rep.code_http, rep.latence_s, rep.tokens_entree,
                               rep.tokens_sortie, False, rep.tentatives, f"JSON invalide : {exc}"[:300])
             raise ErreurServiceIA(f"Réponse non conforme au schéma {schema.__name__} : {exc}") from exc

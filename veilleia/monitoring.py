@@ -72,6 +72,9 @@ def calculer_indicateurs(config: Config, stockage: Stockage) -> tuple[list[Indic
     json_ko = [a for a in avec_json if a["json_valide"] == 0]
     tokens = sum((a["tokens_entree"] or 0) + (a["tokens_sortie"] or 0) for a in appels_prod)
     couts = [a["cout_eur"] for a in appels_prod if a["cout_eur"] is not None]
+    # Une synthèse ratée est noyée dans le taux d'erreur global (1 appel sur ~150) : indicateur dédié.
+    syntheses = [a for a in appels_prod if a["tache"] == "synthese"]
+    derniere_synthese_ko = float(syntheses[-1]["statut"] != "ok") if syntheses else None
     collectes = [dict(c) for c in stockage.derniere_collecte_par_source()]
     sources_ko = [c for c in collectes if c["statut"] != "ok"]
 
@@ -79,6 +82,8 @@ def calculer_indicateurs(config: Config, stockage: Stockage) -> tuple[list[Indic
         Indicateur("Appels au service d'IA", float(n), None, "", "Nombre d'appels d'analyse et de synthèse"),
         Indicateur("Taux d'erreur", len(erreurs) / n if n else None, seuils["taux_erreur_max"], "%",
                    "Appels en échec définitif (après nouvelles tentatives)"),
+        Indicateur("Dernière synthèse en échec", derniere_synthese_ko, 0, "",
+                   "1 si le dernier appel de synthèse a échoué : la synthèse de la semaine n'est pas produite"),
         Indicateur("Latence moyenne", sum(latences) / len(latences) if latences else None, None, "s"),
         Indicateur("Latence 95e centile", percentile(latences, 0.95), seuils["latence_p95_max_s"], "s",
                    "95 % des appels sont plus rapides que cette valeur"),

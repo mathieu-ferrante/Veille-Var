@@ -120,10 +120,16 @@ def cmd_benchmark(config: Config, stockage: Stockage, args: argparse.Namespace) 
 
 
 def cmd_hebdo(config: Config, stockage: Stockage, args: argparse.Namespace) -> int:
-    cmd_collecter(config, stockage, args)
-    cmd_analyser(config, stockage, args)
-    code = cmd_synthetiser(config, stockage, args)
-    return max(code, cmd_monitoring(config, stockage, args))
+    """Chaîne complète. Une étape en échec n'empêche pas le monitorage, qui doit justement la signaler."""
+    codes = []
+    for etape in (cmd_collecter, cmd_analyser, cmd_synthetiser):
+        try:
+            codes.append(etape(config, stockage, args))
+        except ErreurServiceIA as exc:
+            log.error("Étape %s en échec : %s", etape.__name__.removeprefix("cmd_"), exc)
+            codes.append(1)
+    codes.append(cmd_monitoring(config, stockage, args))
+    return max(codes)
 
 
 def construire_parseur() -> argparse.ArgumentParser:

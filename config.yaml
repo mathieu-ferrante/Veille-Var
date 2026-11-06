@@ -92,8 +92,12 @@ production:
   modele_synthese: grand        # synthèse hebdomadaire (F5)
   temperature: 0.1              # faible : réponses stables et factuelles
   max_tokens_analyse: 400
-  max_tokens_synthese: 2500
-  timeout_s: 60
+  # mistral-large-4 raisonne avant de répondre : le raisonnement compte dans ce plafond.
+  # Mesures du 06/11/2026 : 2 500 -> réponse vide ; 8 000 -> JSON coupé (25 articles).
+  max_tokens_synthese: 16000
+  # La synthèse par mistral-large-4 dure environ 1 min (56 s mesurées le 06/11/2026) :
+  # 60 s laissait trop peu de marge, une coupure relançait tout l'appel.
+  timeout_s: 180
   tentatives: 3                 # nouvelles tentatives sur erreur 429 / 5xx / réseau
   pause_entre_appels_s: 0.5     # respect des limites de débit
 
@@ -122,7 +126,7 @@ synthese:
   pertinence_min: 3             # seuls les articles notés >= 3/5 entrent dans la synthèse
   max_articles: 25
   dossier_sortie: syntheses
-  relecteur: "[Prénom NOM]"     # agent qui relit la synthèse avant diffusion
+  relecteur: "Mathieu Ferrante"  # agent qui relit la synthèse avant diffusion
 
 base_de_donnees: data/veilleia.db
 

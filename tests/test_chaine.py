@@ -108,3 +108,38 @@ def test_benchmark_calcule_les_metriques(config, stockage, fabrique_client, tmp_
     assert res["F2_ecart_moyen"] == 0.5            # |5-4| et |5-5|
     assert res["F3_resume_fr_pct"] == 100.0
     assert (tmp_path / "mistral.jsonl").exists()
+
+
+def test_hebdo_lance_le_monitoring_meme_si_la_synthese_echoue(monkeypatch):
+    # Cas réel du 06/11/2026 : synthèse coupée (délai dépassé) -> le monitorage doit quand même tourner.
+    from veilleia import cli
+    from veilleia.ia_client import ErreurServiceIA
+
+    appels = []
+
+    def echec(*_):
+        raise ErreurServiceIA("Échec après 3 tentatives : ReadTimeout")
+
+    monkeypatch.setattr(cli, "cmd_collecter", lambda *_: appels.append("collecte") or 0)
+    monkeypatch.setattr(cli, "cmd_analyser", lambda *_: appels.append("analyse") or 0)
+    monkeypatch.setattr(cli, "cmd_synthetiser", echec)
+    monkeypatch.setattr(cli, "cmd_monitoring", lambda *_: appels.append("monitoring") or 2)
+    assert cli.cmd_hebdo(None, None, None) == 2
+    assert appels == ["collecte", "analyse", "monitoring"]
+
+def test_synthese_coupee_signalee_et_alerte(config, stockage, fabrique_client):
+    # Cas réel du 06/11/2026 : JSON coupé par le plafond de tokens -> message explicite + alerte au monitorage.
+    from veilleia.ia_client import ErreurServiceIA
+
+    _articles(stockage)
+    config.production["pause_entre_appels_s"] = 0
+    client, _ = fabrique_client([reponse_chat(ANALYSE_VALIDE)])
+    analyser_en_attente(client, config, stockage)
+    coupee = reponse_chat('{"chapeau": "Semaine marquée par', tokens=(3000, 8000))
+    coupee["choices"][0]["finish_reason"] = "length"
+    client, _ = fabrique_client([coupee])
+    debut, fin = datetime.now(UTC) - timedelta(days=7), datetime.now(UTC)
+    with pytest.raises(ErreurServiceIA, match="max_tokens_synthese"):
+        generer_synthese(client, config, stockage, debut, fin)
+    indicateurs, _ = calculer_indicateurs(config, stockage)
+    assert next(i for i in indicateurs if i.nom == "Dernière synthèse en échec").en_alerte

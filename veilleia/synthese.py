@@ -50,7 +50,8 @@ def periode_par_defaut(fin: datetime | None = None, jours: int = 7) -> tuple[dat
 
 
 def _fr(d: datetime) -> str:
-    mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre",
+    d = d.astimezone()  # stockage en UTC, affichage à l'heure locale (Paris)
+    mois =["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre",
             "octobre", "novembre", "décembre"]
     return f"{d.day} {mois[d.month - 1]} {d.year}"
 
@@ -203,7 +204,7 @@ def rendre_markdown(r: ResultatSynthese, relecteur: str) -> str:
 def ecrire_synthese(r: ResultatSynthese, config: Config, stockage: Stockage) -> tuple[Path, Path]:
     dossier = config.chemin(config.synthese["dossier_sortie"])
     dossier.mkdir(parents=True, exist_ok=True)
-    base = f"veille_{r.fin:%Y-%m-%d}"
+    base = f"veille_{r.fin.astimezone():%Y-%m-%d}"
     relecteur = config.synthese.get("relecteur", "un agent de la DSI")
     chemin_html, chemin_md = dossier / f"{base}.html", dossier / f"{base}.md"
     chemin_html.write_text(rendre_html(r, relecteur), encoding="utf-8")

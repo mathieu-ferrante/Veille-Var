@@ -1,4 +1,4 @@
 fournisseur;service;modele;articles;reponses_recues;F4_json_conforme_pct;F1_exactitude_pct;F2_ecart_moyen;F3_resume_fr_pct;latence_moy_s;latence_p95_s;tokens_total;cout_estime_eur;erreurs_service
-mistral;Mistral AI – La Plateforme;ministral-8b-latest;30;30;100.0;73.3;0.33;100.0;2.43;3.53;26238;;0
-gemini;Google Gemini API;gemini-3.5-flash-lite;30;30;100.0;66.7;0.53;100.0;1.28;3.03;26580;;0
-ollama;Modèle local (Ollama);gemma3:12b;30;30;100.0;73.3;0.97;100.0;5.66;8.69;26000;;0
+mistral;Mistral AI – La Plateforme;ministral-8b-latest;30;30;100.0;76.7;0.57;100.0;2.83;4.23;29010;0.0043;0
+gemini;Google Gemini API;gemini-3.5-flash-lite;30;30;100.0;80.0;0.6;100.0;1.2;1.71;29166;0.0232;0
+ollama;Modèle local (Ollama);gemma3:12b;30;30;100.0;76.7;0.9;100.0;26.26;37.34;28680;0.0;0

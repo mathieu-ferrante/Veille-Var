@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-06",
+  "resultats": [
+    {
+      "fournisseur": "mistral",
+      "service": "Mistral AI – La Plateforme",
+      "modele": "ministral-8b-latest",
+      "articles": 30,
+      "reponses_recues": 30,
+      "F4_json_conforme_pct": 100.0,
+      "F1_exactitude_pct": 73.3,
+      "F2_ecart_moyen": 0.33,
+      "F3_resume_fr_pct": 100.0,
+      "latence_moy_s": 2.43,
+      "latence_p95_s": 3.53,
+      "tokens_total": 26238,
+      "cout_estime_eur": null,
+      "erreurs_service": 0
+    },
+    {
+      "fournisseur": "gemini",
+      "service": "Google Gemini API",
+      "modele": "gemini-3.5-flash-lite",
+      "articles": 30,
+      "reponses_recues": 30,
+      "F4_json_conforme_pct": 100.0,
+      "F1_exactitude_pct": 66.7,
+      "F2_ecart_moyen": 0.53,
+      "F3_resume_fr_pct": 100.0,
+      "latence_moy_s": 1.28,
+      "latence_p95_s": 3.03,
+      "tokens_total": 26580,
+      "cout_estime_eur": null,
+      "erreurs_service": 0
+    },
+    {
+      "fournisseur": "ollama",
+      "service": "Modèle local (Ollama)",
+      "modele": "gemma3:12b",
+      "articles": 30,
+      "reponses_recues": 30,
+      "F4_json_conforme_pct": 100.0,
+      "F1_exactitude_pct": 73.3,
+      "F2_ecart_moyen": 0.97,
+      "F3_resume_fr_pct": 100.0,
+      "latence_moy_s": 5.66,
+      "latence_p95_s": 8.69,
+      "tokens_total": 26000,
+      "cout_estime_eur": null,
+      "erreurs_service": 0
+    }
+  ],
+  "erreurs": {
+    "mistral": [],
+    "gemini": [],
+    "ollama": []
+  }
+}

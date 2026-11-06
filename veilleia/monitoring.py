@@ -43,12 +43,19 @@ class Indicateur:
             return f"{self.valeur * 100:.1f} %"
         if isinstance(self.valeur, float) and not self.valeur.is_integer():
             return f"{self.valeur:.3f} {self.unite}".strip()
-        return f"{int(self.valeur)} {self.unite}".strip()
+        return f"{_milliers(self.valeur)} {self.unite}".strip()
 
     def seuil_txt(self) -> str:
         if self.seuil is None:
             return "–"
-        return f"{self.seuil * 100:.0f} %" if self.unite == "%" else f"{self.seuil:g} {self.unite}".strip()
+        return f"{self.seuil * 100:.0f} %" if self.unite == "%" else f"{_milliers(self.seuil)} {self.unite}".strip()
+
+
+def _milliers(x: float) -> str:
+    """Nombre lisible à la française : 2 000 000 plutôt que 2e+06 (espace insécable fine)."""
+    if float(x).is_integer():
+        return f"{int(x):,}".replace(",", " ")
+    return f"{x:g}"
 
 
 def percentile(valeurs: list[float], p: float) -> float | None:

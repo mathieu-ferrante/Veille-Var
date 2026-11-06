@@ -42,3 +42,5 @@ ignore = ["S101"]  # assert autorisé dans les tests
 # Gabarits HTML : lignes longues assumées pour garder le balisage lisible
 "veilleia/monitoring.py" = ["E501"]
 "veilleia/synthese.py" = ["E501"]
+# Texte des prompts : le découper modifierait ce qui est envoyé au modèle (et donc les mesures du benchmark)
+"veilleia/prompts.py" = ["E501"]

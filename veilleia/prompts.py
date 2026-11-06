@@ -30,11 +30,14 @@ Format de réponse (JSON) :
   "entites": [{{"type": "modele_ia" | "organisation" | "texte_juridique" | "date" | "autre", "valeur": "..."}}]
 }}
 
-Définitions des catégories :
-- reglementaire : loi, règlement, recommandation d'une autorité (AI Act, RGPD, CNIL, ANSSI...), jurisprudence, sanction.
-- technique : modèles, méthodes, recherche, outils de développement ou de MLOps, bonnes pratiques.
-- offre_outil : annonce commerciale ou nouvelle offre d'un fournisseur (produit, tarif, partenariat).
-- hors_sujet : sans lien avec l'IA, le numérique public ou la protection des données.
+Définitions des catégories. La catégorie décrit la NATURE de la publication, indépendamment de son intérêt :
+une publication peu utile garde sa catégorie et reçoit simplement une pertinence basse.
+- reglementaire : loi, règlement, recommandation ou sanction d'une autorité (AI Act, RGPD, CNIL, ANSSI...), jurisprudence.
+- technique : modèles, méthodes, recherche, outils de développement ou de MLOps, bonnes pratiques, sécurité informatique.
+- offre_outil : actualité commerciale ou économique d'un acteur du numérique : produit, tarif, partenariat,
+  financement, investissement, client, recrutement. Même sans intérêt pour la collectivité, c'est une offre_outil.
+- hors_sujet : UNIQUEMENT si la publication n'a aucun lien avec l'IA, le numérique ou la protection des données
+  (ex. politique générale, produit grand public sans rapport avec le numérique professionnel).
 
 N'invente aucune information absente du texte. Si le texte est trop court, résume le titre et baisse la pertinence."""
 

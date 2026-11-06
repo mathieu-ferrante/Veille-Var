@@ -24,7 +24,7 @@ def test_requete_conforme_et_authentifiee(fabrique_client):
     client.completer_json([{"role": "user", "content": "x"}], AnalyseArticle, modele="petit", max_tokens=300)
     req = requetes[0]
     corps = json.loads(req.content)
-    assert req.url == "https://api.mistral.ai/v1/chat/completions"
+    assert req.url == "https://api.eu.mistral.ai/v1/chat/completions"
     assert req.headers["Authorization"] == "Bearer cle-de-test"
     assert corps["model"] == "ministral-8b-latest"
     assert corps["response_format"] == {"type": "json_object"}

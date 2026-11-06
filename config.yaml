@@ -6,15 +6,18 @@
 # Tous sont appelés via l'interface « chat completions » compatible OpenAI,
 # ce qui permet d'utiliser un seul connecteur et de comparer les services
 # dans des conditions identiques (benchmark).
-#   prix_entree / prix_sortie : en euros par million de tokens.
-#   -> À RENSEIGNER depuis la page tarifs officielle du fournisseur
-#      (laisser null si inconnu : le coût ne sera alors pas calculé).
+#   prix entree / sortie : par million de tokens, relevés le 06/11/2026 sur la page tarifs
+#      officielle (en dollars US, hors taxes). Convertis à 1 $ = 1 € : c'est un majorant prudent
+#      (le dollar vaut moins d'un euro), le coût réel est donc un peu inférieur au coût calculé.
+#      null = prix non publié : le coût n'est alors pas calculé.
 #   modeles : à vérifier dans la documentation, les noms évoluent.
 # ---------------------------------------------------------------------------
 fournisseurs:
   mistral:
     libelle: "Mistral AI – La Plateforme"
-    base_url: "https://api.mistral.ai/v1"
+    # Point d'accès régional : l'inférence est garantie dans l'UE/AELE
+    # (https://docs.mistral.ai/inference/regional-inference, testé le 06/11/2026).
+    base_url: "https://api.eu.mistral.ai/v1"
     cle_env: MISTRAL_API_KEY
     json_mode: true
     modeles:
@@ -23,19 +26,24 @@ fournisseurs:
       # ministral-8b (188 req/min) et mistral-large-4 (50 req/min, 20 000 tokens/min).
       petit: "ministral-8b-latest"
       grand: "mistral-large-4"
-    prix:
-      ministral-8b-latest: { entree: null, sortie: null }
-      mistral-large-4: { entree: null, sortie: null }
+    prix:   # https://docs.mistral.ai/inference/pricing
+      ministral-8b-latest: { entree: 0.15, sortie: 0.15 }
+      mistral-large-4: { entree: 0.70, sortie: 2.10 }
 
   albert:
     libelle: "Albert API (DINUM)"
     base_url: "https://albert.api.etalab.gouv.fr/v1"
     cle_env: ALBERT_API_KEY
     json_mode: true
+    # Gratuit, mais accès sur demande (priorité aux services de l'État). Catalogue au 06/11/2026 :
+    # https://ia.numerique.gouv.fr/outils-ia/albert-api/tarifs-et-limites (identifiants exacts à
+    # confirmer avec GET /v1/models une fois l'accès obtenu).
     modeles:
-      petit: "albert-small"
-      grand: "albert-large"
-    prix: {}
+      petit: "Ministral-3-8B-Instruct-2512"
+      grand: "Mistral-Small-3.2-24B"
+    prix:
+      Ministral-3-8B-Instruct-2512: { entree: 0, sortie: 0 }
+      Mistral-Small-3.2-24B: { entree: 0, sortie: 0 }
 
   openai:
     libelle: "OpenAI API"
@@ -46,9 +54,10 @@ fournisseurs:
     parametre_max_tokens: max_completion_tokens
     temperature_supportee: false
     modeles:
-      petit: "gpt-5-mini"
-      grand: "gpt-5"
-    prix: {}
+      petit: "gpt-5.4-mini"
+      grand: "gpt-5.4-mini"
+    prix:   # https://developers.openai.com/api/docs/pricing
+      gpt-5.4-mini: { entree: 0.75, sortie: 4.50 }
 
   gemini:
     libelle: "Google Gemini API"
@@ -64,7 +73,8 @@ fournisseurs:
       # 3.7/3.8-flash saturés (HTTP 503 / délai dépassé) ; « pro » sans quota gratuit.
       petit: "gemini-3.5-flash-lite"
       grand: "gemini-3.5-flash"
-    prix: {}
+    prix:   # https://aistudio.google.com/docs/pricing (gemini-3.5-flash n'y figure plus)
+      gemini-3.5-flash-lite: { entree: 0.30, sortie: 2.50 }
 
   anthropic:
     libelle: "Anthropic Claude API"
@@ -74,7 +84,9 @@ fournisseurs:
     modeles:
       petit: "claude-haiku-5-5"
       grand: "claude-sonnet-5-5"
-    prix: {}
+    prix:   # https://claude.com/pricing (Haiku : tarif jusqu'à 100 000 tokens de prompt)
+      claude-haiku-5-5: { entree: 0.10, sortie: 0.50 }
+      claude-sonnet-5-5: { entree: 2.00, sortie: 10.00 }
 
   ollama:
     libelle: "Modèle local (Ollama)"
@@ -89,13 +101,14 @@ fournisseurs:
     modeles:
       petit: "gemma3:12b"
       grand: "gemma3:12b"
-    prix: {}
+    prix:   # exécution locale : pas de facturation à l'appel (coût = matériel + électricité)
+      gemma3:12b: { entree: 0, sortie: 0 }
 
 # ---------------------------------------------------------------------------
 # Paramétrage du service retenu (C8)
 # ---------------------------------------------------------------------------
 production:
-  fournisseur: mistral          # service recommandé par le benchmark (à confirmer)
+  fournisseur: mistral          # service recommandé par le benchmark (score 4,55/5, voir benchmark/README.md)
   modele_analyse: petit         # tri / notation / résumé (F1 à F4) : petit modèle = sobriété
   modele_synthese: grand        # synthèse hebdomadaire (F5)
   temperature: 0.1              # faible : réponses stables et factuelles

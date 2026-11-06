@@ -59,22 +59,93 @@ Résultats écrits dans `benchmark/resultats/` :
 F5 (synthèse) est évaluée à la relecture : on génère une synthèse par service retenu et on la juge
 sur une grille simple (fidélité, structure, clarté, sources citées).
 
+## Résultats des tests (6 novembre 2026)
+
+Mêmes 30 publications annotées, même prompt, température 0,1. Détail : `resultats/resultats_2026-11-06.md`.
+
+| Service | Modèle | JSON conforme (F4) | Classement (F1) | Écart pertinence (F2) | Résumés FR (F3) | Latence moy. / p95 |
+|---|---|---|---|---|---|---|
+| Mistral AI | ministral-8b | 100 % | **73,3 %** | **0,33** | 100 % | 2,4 s / 3,5 s |
+| Google Gemini | gemini-3.5-flash-lite | 100 % | 66,7 % | 0,53 | 100 % | **1,3 s** / 3,0 s |
+| Ollama (local) | gemma3:12b | 100 % | **73,3 %** | 0,97 | 100 % | 5,7 s / 8,7 s |
+
+Choix du modèle local par essai préalable (même jeu de test) : llama3.2:3b donnait 5/5 à 27 publications
+sur 30 (écart 2,55, inutilisable), mistral-nemo 60 % de bon classement, gemma3:12b retenu.
+
+**Coût réel mesuré en production** (Mistral, semaine du 30/10 au 06/11/2026) : 164 analyses par
+ministral-8b = 0,023 $ ; synthèse par mistral-large-4 = 0,020 $ par synthèse. Soit environ **0,04 $
+par semaine, moins de 0,20 $ par mois**, pour un budget de 30 €/mois.
+
 ## Grille d'analyse documentaire
 
-> À compléter à partir de la documentation officielle de chaque service, en citant la source et la
-> date de consultation. Ne rien inscrire qui ne soit vérifié.
+Sources officielles consultées le 06/11/2026 (liste en fin de document). Notes de 1 (mauvais) à 5
+(excellent). « n.m. » = non mesuré : service non testé, le score pondéré n'est donc pas calculé.
 
-### Services étudiés
-
-| Critère (poids) | Albert API (DINUM) | Mistral AI | OpenAI | Google Gemini | Anthropic Claude | Azure OpenAI | Modèle local (Ollama) |
+| Critère (poids) | Mistral AI | Ollama + gemma3:12b | Google Gemini | Albert API | OpenAI | Anthropic | Azure OpenAI |
 |---|---|---|---|---|---|---|---|
-| Adéquation F1–F5 (30 %) – *tests* | *(non testé : accès sur demande)* | | *(non testé : payant)* | | *(non testé : payant)* | *(non testé : payant, mêmes modèles qu'OpenAI)* | |
-| RGPD et souveraineté (25 %) : localisation, lois extraterritoriales, réutilisation des données, contrat de sous-traitance | | | | | | | |
-| Coût et achat public (10 %) : prix / million de tokens, offre gratuite, achat via marché ou centrale | | | | | | | |
-| Éco-responsabilité (15 %) : tailles de modèles, données publiées sur l'empreinte, datacenters | | | | | | | |
-| Contraintes et prérequis (10 %) : compte, SDK, JSON, limites de débit, matériel | | | | | | | |
-| Documentation et monitorage (10 %) : qualité de la doc, console d'usage, journaux | | | | | | | |
-| **Score pondéré / 5** | | | | | | | |
+| Adéquation F1–F5 (30 %) | 5 | 4 | 4 | n.m. | n.m. | n.m. | n.m. |
+| RGPD et souveraineté (25 %) | 4 | 5 | 2 | 5 | 2 | 1 | 3 |
+| Coût et achat public (10 %) | 5 | 4 | 4 | 4 | 3 | 4 | 2 |
+| Éco-responsabilité (15 %) | 5 | 3 | 2 | 3 | 2 | 2 | 2 |
+| Contraintes et prérequis (10 %) | 4 | 2 | 3 | 2 | 4 | 4 | 2 |
+| Documentation et monitorage (10 %) | 4 | 3 | 4 | 3 | 4 | 4 | 4 |
+| **Score pondéré / 5** | **4,55** | **3,80** | **3,10** | n.m. | n.m. | n.m. | n.m. |
+
+### Justification par service
+
+**Mistral AI (testé) – 4,55**
+- Adéquation : meilleur classement (73,3 %) et notation la plus proche de l'humain (écart 0,33).
+- Souveraineté : société française, données hébergées dans l'UE par défaut ; le point d'accès
+  `api.eu.mistral.ai` garantit l'inférence dans l'UE (les métadonnées peuvent en sortir). Contrat de
+  sous-traitance (DPA) publié. Pas de qualification SecNumCloud. Point de vigilance : en offre gratuite,
+  Mistral peut utiliser les données pour entraîner ses modèles (refus possible) → l'offre payante est
+  exigée en production.
+- Coût : 0,15 $ / 0,15 $ par million de tokens (ministral-8b), 0,70 $ / 2,10 $ (mistral-large-4).
+- Éco-responsabilité : seul fournisseur étudié à avoir publié une analyse de cycle de vie (Mistral
+  Large 2, juillet 2025, avec Carbone 4 et l'ADEME) : 1,14 g CO₂e et 45 mL d'eau pour une réponse de
+  400 tokens. Petit modèle (8 milliards de paramètres) pour 99 % des appels.
+- Contraintes : compte et clé d'API ; mode JSON natif ; offre gratuite limitée à certains modèles
+  (quota nul sur mistral-small et mistral-medium, constaté) ; mistral-large-4 raisonne avant de
+  répondre (plafond de tokens et délai à adapter, constaté).
+- Documentation et monitorage : documentation claire, console de consommation, limites de débit
+  renvoyées dans les en-têtes de chaque réponse.
+
+**Ollama + gemma3:12b (testé) – 3,80**
+- Adéquation : bon classement (73,3 %), notation moins fine (écart 0,97), plus lent (5,7 s).
+- Souveraineté : aucune donnée ne quitte le poste. Ollama sous licence MIT ; gemma3 sous les
+  « Gemma Terms of Use » de Google (usages interdits listés, pas de revendication sur les sorties).
+- Coût : pas de facturation à l'appel, mais il faut un serveur avec carte graphique (12 Go de mémoire
+  vidéo pour ce modèle) et son électricité, non chiffrés ici.
+- Éco-responsabilité : consommation électrique du poste non mesurée ; pas de données publiées.
+- Contraintes : matériel dédié, installation et mises à jour des modèles à la charge de la DSI.
+- Monitorage : pas de console ; le monitorage de VeilleIA (latence, erreurs, JSON) le couvre.
+
+**Google Gemini (testé) – 3,10**
+- Adéquation : le plus rapide (1,3 s), classement plus faible (66,7 %).
+- Souveraineté : société américaine (Cloud Act). Localisation du traitement non publiée. Les conditions
+  d'utilisation imposent l'offre **payante** pour un service rendu à des utilisateurs de l'Espace
+  économique européen : l'offre gratuite testée n'est pas utilisable en production par le Département.
+- Coût : 0,30 $ / 2,50 $ par million de tokens (flash-lite).
+- Éco-responsabilité : pas de donnée trouvée par modèle.
+- Contraintes : modèles retirés ou saturés rapidement (gemini-2.5 fermé aux nouveaux comptes,
+  gemini-3.7/3.8 saturés lors des essais), limite de débit stricte en gratuit (refus HTTP 429 constatés).
+
+**Albert API (DINUM, non testé)**
+- Gratuite, hébergée en France chez des hébergeurs en partie qualifiés SecNumCloud, catalogue de modèles
+  ouverts dont **Ministral 3 8B**, le même type de modèle que celui retenu chez Mistral.
+- Non testée : l'accès est ouvert en priorité aux agents de l'État ; la page officielle ne mentionne pas
+  les collectivités, qui doivent en faire la demande (délai à prévoir).
+
+**OpenAI (non testé, payant)** – 0,75 $ / 4,50 $ (gpt-5.4-mini). Données de l'API non utilisées pour
+l'entraînement ; résidence des données en Europe possible mais avec conditions (rétention réduite,
+surcoût de 10 %). Société américaine soumise au Cloud Act.
+
+**Anthropic (non testé, payant)** – 0,10 $ / 0,50 $ (Haiku). Pas d'option de traitement en Europe en
+accès direct (seulement « us » ou « global »), donc écarté pour la souveraineté.
+
+**Azure OpenAI (non testé, payant)** – traitement possible dans l'UE (« Data Zone EU »), mais Microsoft
+reconnaît être soumis au Cloud Act ; pas de qualification SecNumCloud trouvée ; prix non affichés
+publiquement (devis).
 
 ### Services non étudiés
 
@@ -85,8 +156,46 @@ sur une grille simple (fidélité, structure, clarté, sources citées).
 | Chatbots grand public utilisés directement par les agents | Pas d'intégration au SI, conditions d'utilisation incompatibles avec un usage public professionnel |
 | Entraînement ou affinage d'un modèle maison | Hors périmètre et hors budget : des services existants couvrent le besoin |
 
-### Conclusion (à rédiger après les tests)
+### Conclusion
 
-- **Services qui répondent au besoin** : … (avantages / inconvénients)
-- **Services qui ne répondent pas au besoin** : … (raison)
-- **Recommandation** : … (service principal + solution de repli)
+**Services qui répondent au besoin**
+
+| Service | Avantages | Inconvénients |
+|---|---|---|
+| Mistral AI (offre payante) | Meilleure qualité mesurée, données dans l'UE, coût dérisoire, empreinte publiée | Pas SecNumCloud ; offre gratuite inadaptée (entraînement) |
+| Ollama + gemma3:12b | Souveraineté totale, aucun coût à l'appel | Matériel dédié, plus lent, notation moins fine, exploitation à la charge de la DSI |
+| Albert API (sous réserve d'accès) | Souverain, gratuit, même modèle Ministral 8B | Accès non garanti aux collectivités, non testé |
+
+**Services qui ne répondent pas au besoin**
+
+| Service | Raison |
+|---|---|
+| Google Gemini | Offre gratuite interdite pour des utilisateurs européens ; société soumise au Cloud Act ; qualité inférieure |
+| OpenAI, Azure OpenAI | Payants, soumis au Cloud Act ; aucun gain attendu sur un besoin aussi simple |
+| Anthropic | Pas de traitement en Europe en accès direct |
+
+**Recommandation**
+
+1. **Service principal : Mistral AI**, offre payante (paiement à l'usage), point d'accès européen
+   `api.eu.mistral.ai`, refus de l'utilisation des données pour l'entraînement, ministral-8b pour
+   l'analyse et mistral-large-4 pour la synthèse. Coût estimé : moins de 1 € par mois.
+2. **Solution de repli : Ollama + gemma3:12b**, déjà configurée et testée : il suffit de lancer
+   `veilleia --fournisseur ollama hebdo` en cas d'indisponibilité de Mistral ou de publication sensible.
+3. **Piste à instruire : Albert API** — déposer une demande d'accès auprès de la DINUM ; si elle est
+   acceptée, la bascule ne demande qu'une clé dans `.env` (le connecteur est déjà prêt).
+
+### Sources de la grille (consultées le 06/11/2026)
+
+- Mistral : https://docs.mistral.ai/inference/pricing · https://docs.mistral.ai/inference/regional-inference ·
+  https://help.mistral.ai/en/articles/347617-do-you-use-my-user-data-to-train-your-artificial-intelligence-models ·
+  https://legal.mistral.ai/terms/data-processing-addendum/ ·
+  https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai
+- Google : https://aistudio.google.com/docs/pricing · https://aistudio.google.com/docs/terms
+- Albert : https://ia.numerique.gouv.fr/outils-ia/albert-api/tarifs-et-limites
+- OpenAI : https://developers.openai.com/api/docs/pricing · https://developers.openai.com/api/docs/guides/your-data
+- Anthropic : https://claude.com/pricing · https://platform.claude.com/docs/en/build-with-claude/data-residency
+- Azure : https://learn.microsoft.com/en-us/Azure/ai-foundry/openai/how-to/deployment-types ·
+  https://www.microsoft.com/en-us/corporate-responsibility/reports/government-requests/customer-data
+- Ollama : https://github.com/ollama/ollama/blob/main/LICENSE · https://ai.google.dev/gemma/terms
+- Comparatif indépendant : Artificial Analysis (https://artificialanalysis.ai), indice d'intelligence
+  de gemini-3.5-flash-lite = 12 (non publié pour ministral 8B et gemma 3 12B).

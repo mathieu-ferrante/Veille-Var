@@ -55,6 +55,10 @@ fournisseurs:
     base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
     cle_env: GEMINI_API_KEY
     json_mode: true
+    # Offre gratuite : nombre de requêtes par minute limité (HTTP 429 « quota exceeded » au-delà,
+    # constaté le 06/11/2026 sur le benchmark : 7 refus sur 30). Valeur prudente ; limites à jour
+    # sur https://ai.dev/rate-limit.
+    requetes_par_minute: 10
     modeles:
       # gemini-2.5-* n'est plus ouvert aux nouveaux comptes (HTTP 404, vérifié le 05/11/2026).
       # 3.7/3.8-flash saturés (HTTP 503 / délai dépassé) ; « pro » sans quota gratuit.
@@ -78,9 +82,13 @@ fournisseurs:
     base_url: "http://localhost:11434/v1"
     cle_env: null      # pas d'authentification en local
     json_mode: true
+    # Choix par essai sur le jeu de test (06/11/2026, GPU Radeon RX 6750 XT 12 Go) :
+    #   llama3.2:3b  -> note 5/5 à 27 publications sur 30 (écart pertinence 2,55) : inutilisable
+    #   mistral-nemo -> classement 60 %, écart 0,93
+    #   gemma3:12b   -> classement 73,3 %, écart 0,97 : retenu
     modeles:
-      petit: "llama3.2:3b"
-      grand: "llama3.2:3b"
+      petit: "gemma3:12b"
+      grand: "gemma3:12b"
     prix: {}
 
 # ---------------------------------------------------------------------------

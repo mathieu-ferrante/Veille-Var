@@ -94,6 +94,7 @@ class ResultatService:
     modele: str
     nb: int = 0
     json_ok: int = 0
+    json_ko: int = 0  # réponse reçue mais non conforme au schéma
     categorie_ok: int = 0
     ecarts_pertinence: list[int] = field(default_factory=list)
     resumes_fr: int = 0
@@ -104,14 +105,17 @@ class ResultatService:
     erreurs: list[str] = field(default_factory=list)
 
     def resume(self) -> dict:
-        n = self.nb or 1
+        # F4 porte sur les réponses effectivement reçues : un refus de quota (HTTP 429) ou une coupure réseau
+        # n'est pas une faute du modèle et est compté à part (« erreurs de service »).
+        recues = self.json_ok + self.json_ko
         ok = self.json_ok or 1
         return {
             "fournisseur": self.fournisseur,
             "service": self.libelle,
             "modele": self.modele,
             "articles": self.nb,
-            "F4_json_conforme_pct": round(100 * self.json_ok / n, 1),
+            "reponses_recues": recues,
+            "F4_json_conforme_pct": round(100 * self.json_ok / recues, 1) if recues else None,
             "F1_exactitude_pct": round(100 * self.categorie_ok / ok, 1) if self.json_ok else None,
             "F2_ecart_moyen": round(sum(self.ecarts_pertinence) / len(self.ecarts_pertinence), 2)
             if self.ecarts_pertinence else None,
@@ -120,7 +124,7 @@ class ResultatService:
             "latence_p95_s": round(percentile(self.latences, 0.95), 2) if self.latences else None,
             "tokens_total": self.tokens_entree + self.tokens_sortie,
             "cout_estime_eur": round(self.cout_eur, 4) if self.cout_eur is not None else None,
-            "erreurs": len(self.erreurs),
+            "erreurs_service": len(self.erreurs) - self.json_ko,
         }
 
 
@@ -145,6 +149,7 @@ def evaluer_service(fournisseur: Fournisseur, config: Config, articles: list[dic
                 res.resumes_fr += int(est_en_francais(sortie.resume))
                 ligne["obtenu"] = sortie.model_dump()
             except ErreurServiceIA as exc:
+                res.json_ko += int(exc.json_invalide)
                 res.erreurs.append(str(exc)[:200])
                 ligne["erreur"] = str(exc)[:300]
                 if exc.code_http in (401, 403):
@@ -178,7 +183,7 @@ def ecrire_resultats(resultats: list[ResultatService], dossier: Path) -> Path:
                    ensure_ascii=False, indent=2), encoding="utf-8")
     md = [f"# Résultats du benchmark – {jour}", "",
           "| Service | Modèle | JSON conforme (F4) | Exactitude classement (F1) | Écart pertinence (F2) "
-          "| Résumés en français (F3) | Latence moy. / p95 | Tokens | Coût estimé | Erreurs |",
+          "| Résumés en français (F3) | Latence moy. / p95 | Tokens | Coût estimé | Erreurs de service |",
           "|---|---|---|---|---|---|---|---|---|---|"]
     for r in lignes:
         def v(x: object, suffixe: str = "") -> str:
@@ -186,10 +191,11 @@ def ecrire_resultats(resultats: list[ResultatService], dossier: Path) -> Path:
         md.append(f"| {r['service']} | {r['modele']} | {v(r['F4_json_conforme_pct'], ' %')} | "
                   f"{v(r['F1_exactitude_pct'], ' %')} | {v(r['F2_ecart_moyen'])} | {v(r['F3_resume_fr_pct'], ' %')} | "
                   f"{v(r['latence_moy_s'], ' s')} / {v(r['latence_p95_s'], ' s')} | {r['tokens_total']} | "
-                  f"{v(r['cout_estime_eur'], ' €')} | {r['erreurs']} |")
-    md += ["", "Lecture : F1 et F3 en pourcentage des réponses conformes ; F2 = écart absolu moyen entre la note "
-           "du modèle et l'annotation humaine (0 = parfait). La fidélité des résumés se juge à la relecture des "
-           "fichiers bruts (`resultats/brut/`)."]
+                  f"{v(r['cout_estime_eur'], ' €')} | {r['erreurs_service']} |")
+    md += ["", "Lecture : F4 en pourcentage des réponses reçues ; F1 et F3 en pourcentage des réponses conformes ; "
+           "F2 = écart absolu moyen entre la note du modèle et l'annotation humaine (0 = parfait). Les erreurs de "
+           "service (quota, réseau) ne sont pas imputées au modèle. La fidélité des résumés se juge à la relecture "
+           "des fichiers bruts (`resultats/brut/`)."]
     chemin = dossier / f"resultats_{jour}.md"
     chemin.write_text("\n".join(md) + "\n", encoding="utf-8")
     return chemin

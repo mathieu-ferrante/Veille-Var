@@ -34,9 +34,12 @@ CODES_A_REESSAYER = {408, 409, 425, 429, 500, 502, 503, 504}
 class ErreurServiceIA(Exception):
     """Échec définitif d'un appel au service d'IA."""
 
-    def __init__(self, message: str, code_http: int | None = None) -> None:
+    def __init__(self, message: str, code_http: int | None = None, json_invalide: bool = False) -> None:
         super().__init__(message)
         self.code_http = code_http
+        # Vrai si le service a bien répondu mais que la réponse ne respecte pas le schéma (mesure F4).
+        # Faux pour les erreurs de service (quota, réseau, accès) : le modèle n'a pas pu répondre.
+        self.json_invalide = json_invalide
 
 
 def texte_reponse(contenu) -> str:
@@ -87,6 +90,20 @@ class ClientIA:
             entetes["Authorization"] = f"Bearer {fournisseur.cle_api}"
         self.http = client_http or httpx.Client(timeout=timeout_s)
         self.http.headers.update(entetes)
+        # Respect de la limite de débit de l'offre (ex. offre gratuite Gemini) : intervalle minimal entre appels
+        rpm = fournisseur.requetes_par_minute
+        self.intervalle_min_s = 60 / rpm if rpm else 0.0
+        self._dernier_appel = 0.0
+
+    def _respecter_debit(self) -> float:
+        """Attend si nécessaire ; renvoie la durée attendue (à exclure de la latence mesurée)."""
+        attente = 0.0
+        if self.intervalle_min_s:
+            attente = max(0.0, self._dernier_appel + self.intervalle_min_s - time.monotonic())
+            if attente > 0:
+                time.sleep(attente)
+            self._dernier_appel = time.monotonic()
+        return attente
 
     def fermer(self) -> None:
         self.http.close()
@@ -115,6 +132,7 @@ class ClientIA:
         debut = time.perf_counter()
         for essai in range(1, self.tentatives + 1):
             try:
+                debut += self._respecter_debit()  # l'attente volontaire n'est pas de la latence du service
                 r = self.http.post(url, json=corps)
                 code = r.status_code
                 if r.status_code in CODES_A_REESSAYER and essai < self.tentatives:
@@ -172,7 +190,8 @@ class ClientIA:
                                  f"max_tokens_{tache} dans config.yaml ({exc})")
             self._journaliser(tache, rep.modele, "erreur", rep.code_http, rep.latence_s, rep.tokens_entree,
                               rep.tokens_sortie, False, rep.tentatives, f"JSON invalide : {exc}"[:300])
-            raise ErreurServiceIA(f"Réponse non conforme au schéma {schema.__name__} : {exc}") from exc
+            raise ErreurServiceIA(f"Réponse non conforme au schéma {schema.__name__} : {exc}",
+                                  rep.code_http, json_invalide=True) from exc
         self._journaliser(tache, rep.modele, "ok", rep.code_http, rep.latence_s, rep.tokens_entree,
                           rep.tokens_sortie, True, rep.tentatives, None)
         return resultat

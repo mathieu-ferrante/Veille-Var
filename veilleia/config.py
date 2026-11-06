@@ -30,6 +30,7 @@ class Fournisseur:
     prix: dict[str, dict[str, float | None]] = field(default_factory=dict)
     parametre_max_tokens: str = "max_tokens"
     temperature_supportee: bool = True
+    requetes_par_minute: int | None = None  # limite de débit de l'offre souscrite (None = pas de limite)
 
     @property
     def cle_api(self) -> str | None:
@@ -97,6 +98,7 @@ class Config:
             prix=conf.get("prix") or {},
             parametre_max_tokens=conf.get("parametre_max_tokens", "max_tokens"),
             temperature_supportee=bool(conf.get("temperature_supportee", True)),
+            requetes_par_minute=conf.get("requetes_par_minute"),
         )
 
     def fournisseurs(self) -> list[Fournisseur]:

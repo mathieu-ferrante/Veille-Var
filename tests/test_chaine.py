@@ -143,3 +143,29 @@ def test_synthese_coupee_signalee_et_alerte(config, stockage, fabrique_client):
         generer_synthese(client, config, stockage, debut, fin)
     indicateurs, _ = calculer_indicateurs(config, stockage)
     assert next(i for i in indicateurs if i.nom == "Dernière synthèse en échec").en_alerte
+
+def test_benchmark_n_impute_pas_les_refus_de_quota_au_modele(config, stockage, fabrique_client, tmp_path):
+    # Cas réel du 06/11/2026 : 7 refus HTTP 429 de Gemini comptés à tort comme « JSON non conforme ».
+    config.production["pause_entre_appels_s"] = 0
+    articles = [{"id": x, "source_id": "cnil", "titre": x, "contenu": "c",
+                 "annotation": {"categorie": "reglementaire", "pertinence": 5}} for x in "abc"]
+    refus = httpx.Response(429, json={"error": "quota"})
+    client, _ = fabrique_client([refus, refus, refus, reponse_chat("pas du JSON"), reponse_chat(ANALYSE_VALIDE)])
+    res = evaluer_service(client.fournisseur, config, articles, stockage, tmp_path, client=client).resume()
+    assert res["reponses_recues"] == 2
+    assert res["F4_json_conforme_pct"] == 50.0     # 1 conforme sur 2 réponses reçues
+    assert res["erreurs_service"] == 1             # le refus de quota est compté à part
+
+
+def test_limite_de_debit_respectee(config, monkeypatch):
+    from veilleia import ia_client
+
+    pauses = []
+    monkeypatch.setattr(ia_client.time, "sleep", pauses.append)
+    f = config.fournisseur("mistral")
+    f.requetes_par_minute = 10                      # 1 appel toutes les 6 s au plus
+    client = ia_client.ClientIA(f, client_http=httpx.Client(transport=httpx.MockTransport(
+        lambda r: httpx.Response(200, json=reponse_chat("OK")))))
+    client.completer([{"role": "user", "content": "x"}], "petit", json_attendu=False)
+    client.completer([{"role": "user", "content": "x"}], "petit", json_attendu=False)
+    assert len(pauses) == 1 and 5.5 < pauses[0] <= 6

@@ -23,18 +23,26 @@ Notation : ✔ (oui), ~ (partiellement), ✘ (non). Note globale sur 5 reportée
 
 | Source | Thème | A | B | C | D | E | F | Note | Commentaire |
 |---|---|---|---|---|---|---|---|---|---|
-| CNIL – Actualités | Réglementaire | | | | | | | | Autorité de contrôle RGPD |
-| LINC (CNIL) | Réglementaire | | | | | | | | Laboratoire d'innovation de la CNIL, analyses prospectives |
-| Commission européenne – Digital strategy | Réglementaire | | | | | | | | Source officielle de l'AI Act |
-| EU AI Act Newsletter (Future of Life Institute) | Réglementaire | | | | | | | | Synthèse experte ; organisation engagée sur la régulation de l'IA : à recouper |
-| Mistral AI – Blog | Technique | | | | | | | | Fournisseur testé ; officiel mais promotionnel |
-| Hugging Face – Blog | Technique | | | | | | | | Écosystème des modèles open-weight |
-| OpenAI – News | Technique | | | | | | | | Fournisseur étudié ; officiel mais promotionnel |
-| Google – Blog IA | Technique | | | | | | | | Fournisseur testé (Gemini) ; officiel mais promotionnel |
-| Simon Willison's Weblog | Technique | | | | | | | | Développeur indépendant reconnu, recoupe les annonces |
-| Next | Presse | | | | | | | | Presse française, couvre bien la réglementation |
-| Le Monde Informatique – IA | Presse | | | | | | | | Presse professionnelle française |
-| GreenIT.fr | Sobriété | | | | | | | | Éco-conception numérique |
+| CNIL – Actualités | Réglementaire | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | 5 | Autorité de contrôle RGPD ; source primaire |
+| LINC (CNIL) | Réglementaire | ✔ | ✔ | ✔ | ✔ | ~ | ✔ | 5 | Laboratoire d'innovation de la CNIL, analyses prospectives signées |
+| Commission européenne – Digital strategy | Réglementaire | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | 5 | Source officielle de l'AI Act ; en anglais |
+| EU AI Act Newsletter (Future of Life Institute) | Réglementaire | ✔ | ~ | ✔ | ✔ | ~ | ✔ | 4 | Synthèse experte et sourcée ; organisation engagée pour la régulation de l'IA : à recouper |
+| Mistral AI – Blog | Technique | ~ | ~ | ~ | ✔ | ~ | ~ | 3 | Fournisseur testé ; officiel mais promotionnel, chiffres non sourcés |
+| Hugging Face – Blog | Technique | ✔ | ~ | ✔ | ✔ | ~ | ✔ | 4 | Billets signés, souvent avec code et résultats reproductibles |
+| OpenAI – News | Technique | ~ | ~ | ~ | ✔ | ~ | ~ | 3 | Fournisseur étudié ; officiel mais promotionnel |
+| Google – Blog IA | Technique | ✔ | ~ | ~ | ✔ | ~ | ~ | 3 | Fournisseur testé (Gemini) ; officiel mais promotionnel |
+| Simon Willison's Weblog | Technique | ✔ | ✔ | ✔ | ✔ | ~ | ✔ | 4 | Développeur indépendant reconnu ; teste et recoupe les annonces, cite ses sources |
+| Next | Presse | ✔ | ✔ | ✔ | ✔ | ~ | ✔ | 4 | Presse française indépendante (sans publicité), couvre bien la réglementation et la sécurité |
+| Le Monde Informatique – IA | Presse | ✔ | ✔ | ✔ | ✔ | ~ | ✔ | 4 | Presse professionnelle française ; reprend parfois des communiqués |
+| GreenIT.fr | Sobriété | ✔ | ~ | ✔ | ✔ | ~ | ✔ | 4 | Référence de l'éco-conception ; animé par un cabinet de conseil (intérêt possible) |
+
+Évaluation du 06/11/2026, à revoir lors de la revue mensuelle des sources. Le critère E est noté
+✔ seulement quand le site publie une déclaration d'accessibilité (obligation des organismes publics) ;
+sinon ~ : pas d'audit RGAA réalisé dans le cadre de ce projet.
+
+**Bilan.** Les sources institutionnelles (CNIL, Commission) sont des sources primaires : elles servent de
+référence pour la réglementation. Les blogs des fournisseurs sont gardés pour suivre leurs offres, mais
+toute information qui en vient est recoupée avant d'entrer dans une décision.
 
 ## Sources consultées manuellement
 

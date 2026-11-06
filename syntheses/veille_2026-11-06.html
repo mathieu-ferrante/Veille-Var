@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veille IA – semaine du 30 octobre 2026 au 6 novembre 2026 – DSI Département</title>
+<style>
+:root { --texte:#1a1a1a; --fond:#ffffff; --accent:#00436e; --doux:#4a4a4a; --bord:#c8d3dc; --zone:#eef3f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --texte:#f0f0f0; --fond:#121417; --accent:#8cc8ff; --doux:#c4c4c4; --bord:#3a4550; --zone:#1d242b; }
+}
+* { box-sizing: border-box; }
+body { margin:0; font-family: Arial, Helvetica, sans-serif; font-size:1rem; line-height:1.6;
+       color:var(--texte); background:var(--fond); }
+main, header, footer { max-width: 50rem; margin: 0 auto; padding: 0 1rem; }
+a { color: var(--accent); text-decoration: underline; }
+a:focus, a:hover { outline: 3px solid var(--accent); outline-offset: 2px; }
+.evitement { position:absolute; left:-999px; }
+.evitement:focus { position:static; display:inline-block; padding:.5rem; background:var(--zone); }
+h1 { color:var(--accent); font-size:1.8rem; line-height:1.25; }
+h2 { color:var(--accent); font-size:1.4rem; border-bottom:2px solid var(--bord); padding-bottom:.25rem; margin-top:2rem; }
+h3 { font-size:1.1rem; margin-bottom:.25rem; }
+.meta, .sources-point { color:var(--doux); font-size:.95rem; }
+.encadre { background:var(--zone); border-left:6px solid var(--accent); padding:.75rem 1rem; margin:1rem 0; }
+table { border-collapse:collapse; width:100%; font-size:.95rem; }
+caption { text-align:left; font-weight:bold; padding:.5rem 0; }
+th, td { border:1px solid var(--bord); padding:.4rem .5rem; text-align:left; vertical-align:top; }
+th { background:var(--zone); }
+@media print { a { color: inherit; } .evitement { display:none; } }
+</style>
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<header>
+<p class="meta">Direction des systèmes d'information – Veille technique et réglementaire sur l'IA</p>
+<h1>Veille IA – semaine du 30 octobre 2026 au 6 novembre 2026</h1>
+</header>
+<main id="contenu">
+<p>Cette semaine, la CNIL et la justice européenne précisent le cadre des outils de suivi en ligne et de l&#x27;IA générative. Deux failles critiques menacent les serveurs Linux et Alpine, appelant à une vigilance immédiate. Les offres souveraines se renforcent, tandis que les collectivités sont concernées par les évolutions des objets connectés.</p>
+<section class="encadre">
+<h2>À retenir pour le Département</h2>
+<ul><li>Appliquer immédiatement les correctifs pour les failles Linux (CVE-2026-98432) et Alpine Linux (CVE-2026-123158) sur tous les serveurs concernés.</li><li>Vérifier la conformité RGPD de tout outil de rejeu de session utilisé sur les sites du Département, en suivant la recommandation de la CNIL.</li><li>Auditer les contrats d&#x27;objets connectés (type Airzone, Withings) pour anticiper d&#x27;éventuels changements unilatéraux de conditions tarifaires.</li><li>Suivre les offres souveraines (cloud Bull/Schwarz Digits) pour les futurs projets d&#x27;hébergement IA ; Renater Partage, réservé à l&#x27;enseignement supérieur et à la recherche, n&#x27;est pas accessible au Département.</li><li>Sensibiliser les agents à la détection de contenus générés par IA (images, vidéos) avec les nouveaux outils disponibles.</li></ul>
+</section>
+<section>
+<h2>Réglementation</h2>
+<h3>Rejeu de session : la CNIL encadre les outils d&#x27;enregistrement d&#x27;activité</h3>
+<p>La CNIL publie une recommandation dédiée aux outils de rejeu de session pour garantir la conformité RGPD. Ces outils, qui enregistrent les comportements en ligne, doivent assurer transparence et consentement des usagers. Le document s&#x27;adresse aux concepteurs comme aux utilisateurs.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://www.cnil.fr/fr/rejeu-de-session-recommandation">Outils de rejeu de session : la CNIL publie sa recommandation pour guider les acteurs</a> <span class="meta">(cnil, référence 2)</span></li><li><a href="https://www.cnil.fr/fr/rejeu-de-session-vos-droits">Rejeu de session : ces outils qui enregistrent votre activité en ligne</a> <span class="meta">(cnil, référence 15)</span></li></ul>
+<h3>Chatbots IA et presse sous paywall : la CJUE se prononce</h3>
+<p>L&#x27;avocat général de la CJUE estime que les chatbots IA ne peuvent pas reprendre des articles de presse sous paywall sans autorisation. L&#x27;affaire oppose Like Compagny à Google sur l&#x27;usage du RAG et la reproduction de style. Ces conclusions pourraient influencer le cadre européen sur le scraping et l&#x27;IA générative.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://next.ink/265451/chatbots-ia-le-droit-europeen-interdirait-la-reprise-darticles-de-presse-sous-paywall/">Chatbots IA : le droit européen interdirait la reprise d’articles de presse sous paywall</a> <span class="meta">(next, référence 6)</span></li></ul>
+<h3>TikTok : la Commission dénonce l&#x27;effet « rabbit hole » du fil « Pour vous »</h3>
+<p>La Commission européenne estime que le système de recommandation de TikTok enfreint le Digital Services Act. Il créerait des effets de « rabbit hole » nuisibles, notamment sur la santé mentale des publics vulnérables. Les mesures de mitigation des risques sont examinées.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://digital-strategy.ec.europa.eu/en/news/commission-preliminarily-finds-tiktoks-you-feed-breach-digital-services-act-harmful-rabbit-holes">Commission preliminarily finds TikTok’s ‘For You’ feed in breach of Digital Services Act for harmful ‘rabbit holes’ effect</a> <span class="meta">(commission_ue, référence 8)</span></li></ul>
+<h3>Vérification de l&#x27;âge en ligne : étude pour le futur EU KIDS Act</h3>
+<p>Une étude indépendante évalue l&#x27;impact de l&#x27;assurance d&#x27;âge sur les droits fondamentaux et les coûts pour les entreprises. Elle recommande un cadre proportionné, aligné sur le RGPD, avec des alternatives manuelles pour garantir l&#x27;inclusivité. Un blueprint européen est proposé pour une vérification abordable et souveraine.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://digital-strategy.ec.europa.eu/en/library/independent-study-impact-age-assurance-fundamental-rights-and-costs-businesses">Independent study on the impact of age assurance on fundamental rights and costs for businesses</a> <span class="meta">(commission_ue, référence 18)</span></li></ul>
+<h3>Protection des enfants : lancement de la plateforme « Privacy for Kids »</h3>
+<p>Le CEPD et la CNIL lancent une plateforme pédagogique pour sensibiliser les enfants à la protection de leurs données personnelles. Le contenu est conçu pour être accessible et adapté à leur âge, en collaboration avec d&#x27;autres autorités européennes.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://www.cnil.fr/fr/cepd-privacy-for-kids">Privacy for Kids : le CEPD lance une plateforme dédiée à la vie privée des enfants</a> <span class="meta">(cnil, référence 19)</span></li></ul>
+<h3>Objets connectés devenus payants : le cas Airzone et Withings</h3>
+<p>Airzone impose depuis fin octobre un abonnement payant pour des fonctions clés de ses solutions domotiques, touchant aussi des collectivités. Ce changement unilatéral pourrait enfreindre l&#x27;article L. 212-1 du Code de la consommation sur les clauses abusives. Withings est également concerné par ce type de pratique.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://next.ink/265416/airzone-withings-quand-des-fonctions-connectees-gratuites-deviennent-payantes/">Airzone, Withings : quand des fonctions connectées gratuites deviennent payantes</a> <span class="meta">(next, référence 24)</span></li></ul>
+<h3>Alerte sur les dérives de l&#x27;IA au Parlement européen</h3>
+<p>La présidente du Parlement européen, Roberta Metsola, met en garde contre les risques liés à un usage excessif de l&#x27;intelligence artificielle, sans préciser les mesures envisagées.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://www.lemondeinformatique.fr/actualites/lire-le-parlement-europeen-met-en-garde-contre-les-derives-de-l-ia-100915.html">Le Parlement européen met en garde contre les dérives de l&#x27;IA</a> <span class="meta">(lmi_ia, référence 11)</span></li></ul>
+</section>
+<section>
+<h2>Sécurité</h2>
+<h3>Faille critique dans le noyau Linux (CVE-2026-98432)</h3>
+<p>Une faille de type « use-after-free » dans le noyau Linux permet de faire planter un serveur à distance via TCP, sans authentification. Le score CVSS est de 9,8. La faille affecte les versions depuis 4.4 et les correctifs sont inégaux selon les distributions. Vérifiez l&#x27;état de vos serveurs.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://next.ink/265616/une-faille-critique-dans-le-noyau-linux-permet-de-faire-planter-un-serveur-via-tcp/">Une faille critique dans le noyau Linux permet de faire planter un serveur via TCP</a> <span class="meta">(next, référence 4)</span></li></ul>
+<h3>Faille OpenSSH sur Alpine Linux (CVE-2026-123158)</h3>
+<p>Une faille critique affecte Alpine Linux en configuration par défaut : elle permet une connexion SSH sans mot de passe via un mot de passe de 256 caractères. Seuls les serveurs avec des comptes sans mot de passe (comme root) sont vulnérables. Un correctif est publié depuis le 5 novembre.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://next.ink/266066/une-faille-dans-alpine-linux-permet-de-se-connecter-avec-un-mot-de-passe-trop-long/">Une faille dans Alpine Linux permet de se connecter avec un mot de passe trop long</a> <span class="meta">(next, référence 7)</span></li></ul>
+<h3>Cyberattaque contre l&#x27;Établissement français du sang via un prestataire</h3>
+<p>L&#x27;EFS a subi une attaque ciblant son prestataire Coolworld, entraînant une modification de température dans des chambres froides (passage de -30°C à 110°C). Les systèmes de supervision ont permis de détecter l&#x27;anomalie rapidement. Aucun impact sanitaire ni perte de produits n&#x27;a été constaté.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://next.ink/brief-article/letablissement-francais-du-sang-touche-par-le-piratage-de-certaines-chambres-froides/">☕️ L’Établissement français du sang touché par le piratage de certaines chambres froides</a> <span class="meta">(next, référence 20)</span></li></ul>
+</section>
+<section>
+<h2>Technique</h2>
+<h3>security.txt : faible adoption dans le .fr et failles PHP exposées</h3>
+<p>Sur 4,6 millions de domaines en .fr, seuls 120 000 disposent d&#x27;un fichier security.txt pour signaler des vulnérabilités. 85 % de ces fichiers sont identiques et génériques. Par ailleurs, 250 000 sites exposent des failles PHP critiques.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://next.ink/266069/tarte-aux-fraises-biere-virtuelle-ascii-art-ce-que-cachent-les-security-txt-du-fr/">Tarte aux fraises, bière virtuelle, ASCII art : ce que cachent les security.txt du .fr</a> <span class="meta">(next, référence 1)</span></li></ul>
+<h3>NVIDIA Cosmos 3 : modèles ouverts pour la simulation d&#x27;environnements</h3>
+<p>NVIDIA lance trois modèles open-weight dédiés à la simulation d&#x27;environnements interactifs. Ces outils pourraient servir à la modélisation 3D ou à la planification urbaine. Leur approche open-source favorise l&#x27;innovation collaborative.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation">New NVIDIA Cosmos 3 Open Models for Interactive World Simulation</a> <span class="meta">(huggingface, référence 9)</span></li></ul>
+<h3>Compression LZ4 1.11 : gains de performance en multithreading</h3>
+<p>La version 1.11 de LZ4 améliore le multithreading dans l&#x27;API liblz4. Les tests montrent des gains jusqu&#x27;à 15 % en monothread et jusqu&#x27;à x9 en multithread pour l&#x27;API lz4frame, avec une meilleure gestion des petites données.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://next.ink/265850/compression-lz4-1-11-nous-avons-teste-les-performances-de-cette-version-majeure/">Compression lz4 1.11 : nous avons testé les performances de cette version « majeure »</a> <span class="meta">(next, référence 12)</span></li></ul>
+<h3>Extraction de données structurées avec Dharma Field Extractor</h3>
+<p>Hugging Face propose un outil qui convertit n&#x27;importe quel document en champs structurés au format JSON. Cet outil facilite la numérisation et la gestion des données administratives.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://huggingface.co/blog/Dharma-AI/dharma-field-extractor">Dharma Field Extractor: Any Document In, Structured Fields in JSON Out</a> <span class="meta">(huggingface, référence 17)</span></li></ul>
+<h3>Programmation dans l&#x27;espace des poids des modèles</h3>
+<p>Des modèles comme Qwen 3.8 et GPT-6 Astra peuvent interpréter et modifier directement les poids d&#x27;un réseau de neurones, sans entraînement classique. Cette capacité, appelée « Weight-Space Programming », permet d&#x27;améliorer des modèles existants à partir de poids bruts.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/">Qwen 3.8 27B on my laptop can interpret model weights, too</a> <span class="meta">(simon_willison, référence 22)</span></li></ul>
+<h3>Sobriété numérique : Benchmark Green IT 2027</h3>
+<p>Le Benchmark Green IT propose une évaluation actualisée pour 2027 de l&#x27;impact environnemental des systèmes d&#x27;information. Il aide les organisations à mesurer et améliorer leur sobriété numérique.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://www.greenit.fr/2026/11/03/participez-au-benchmark-green-it-2027/">Evaluez votre système d’information avec le Benchmark Green IT 2027</a> <span class="meta">(greenit, référence 23)</span></li></ul>
+<h3>OpenAI unifie ChatGPT et Work autour d&#x27;un quota commun</h3>
+<p>OpenAI fusionne les quotas de tokens de ChatGPT et Work pour créer une plateforme unifiée axée sur le travail, avec des fonctionnalités agentiques intégrées. Cela vise à renforcer l&#x27;interopérabilité des outils professionnels.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://www.lemondeinformatique.fr/actualites/lire-openai-fusionne-chatgpt-et-work-autour-d-un-quota-commun-de-tokens-100896.html">OpenAI fusionne ChatGPT et Work autour d&#x27;un quota commun de tokens</a> <span class="meta">(lmi_ia, référence 25)</span></li></ul>
+</section>
+<section>
+<h2>Offres et outils</h2>
+<h3>Messagerie souveraine : le CNRS migre vers Partage de Renater</h3>
+<p>Le CNRS remplace son hébergement Exchange par Partage de Renater, une solution basée sur le logiciel libre Zimbra. Cette migration s&#x27;inscrit dans une stratégie de sortie des GAFAM. Renater vise 1,5 million d&#x27;utilisateurs d&#x27;ici 2027.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://next.ink/265651/le-cnrs-continue-son-menage-anti-gafam-sa-messagerie-migre-vers-partage-de-renater/">Le CNRS continue son ménage anti-GAFAM, sa messagerie migre vers Partage de Renater</a> <span class="meta">(next, référence 3)</span></li></ul>
+<h3>Cloud souverain européen pour l&#x27;IA : alliance Bull et Schwarz Digits</h3>
+<p>Bull et Schwarz Digits collaborent pour créer un cloud européen dédié à l&#x27;intelligence artificielle. Ce partenariat vise à répondre aux exigences de sécurité et de conformité des administrations publiques.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://www.lemondeinformatique.fr/actualites/lire-bull-et-schwarz-digits-s-allient-pour-developper-un-cloud-souverain-europeen-dedie-a-l-ia-100903.html">Bull et Schwarz Digits s&#x27;allient pour développer un cloud souverain européen dédié à l&#x27;IA</a> <span class="meta">(lmi_ia, référence 5)</span></li></ul>
+<h3>Détection de contenus synthétiques : Pangram étend aux images et vidéos</h3>
+<p>Pangram lance deux nouveaux modèles pour détecter l&#x27;IA générative dans les images et les vidéos, en complément du texte. Ces outils visent à renforcer la détection de contenu synthétique pour les administrations.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://www.lemondeinformatique.fr/actualites/lire-pangram-etend-sa-technologie-de-detection-de-l-ia-aux-images-et-aux-videos-100918.html">Pangram étend sa technologie de détection de l&#x27;IA aux images et aux vidéos</a> <span class="meta">(lmi_ia, référence 10)</span></li></ul>
+<h3>Agents d&#x27;entreprise : Mistral Studio et Le Chonk</h3>
+<p>Mistral annonce Mistral Studio et Le Chonk, une solution pour construire et déployer rapidement des agents d&#x27;entreprise, des workflows et des applications, avec un contrôle total sur les modèles et les données.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://mistral.ai/news/build-with-studio/">Le Chonk brings the brains. Studio puts it to work.</a> <span class="meta">(mistral, référence 14)</span></li></ul>
+<h3>IA pour la cybersécurité : GPT-6 Cyber et Daybreak Red</h3>
+<p>OpenAI présente GPT-6 Cyber, un modèle spécialisé pour identifier des vulnérabilités et proposer des correctifs. Le modèle est aussi disponible via AWS GovCloud (US-East) sous le nom Daybreak Red pour les usages autorisés en cybersécurité.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://openai.com/index/introducing-gpt-6-cyber">GPT‑6 Cyber: Advancing the frontier of aligned cybersecurity agents</a> <span class="meta">(openai, référence 16)</span></li><li><a href="https://openai.com/index/daybreak-red-aws-govcloud">Daybreak Red is now available in AWS GovCloud (US-East)</a> <span class="meta">(openai, référence 21)</span></li></ul>
+<h3>Adoption de l&#x27;IA par les éditeurs français</h3>
+<p>Les éditeurs de logiciels français intègrent massivement l&#x27;IA dans leurs solutions, dépassant la phase d&#x27;expérimentation pour une adoption généralisée.</p>
+<p class="sources-point">Sources :</p>
+<ul class="sources-point"><li><a href="https://www.lemondeinformatique.fr/actualites/lire-les-editeurs-francais-accelerent-l-adoption-de-l-ia-100914.html">Les éditeurs français accélèrent l&#x27;adoption de l&#x27;IA</a> <span class="meta">(lmi_ia, référence 13)</span></li></ul>
+</section>
+<section>
+<h2>Publications analysées</h2>
+<table>
+<caption>Liste des 25 publications retenues, avec leur catégorie et leur pertinence</caption>
+<thead><tr><th scope="col">N°</th><th scope="col">Publication</th><th scope="col">Catégorie</th>
+<th scope="col">Pertinence</th></tr></thead>
+<tbody><tr><td>1</td><th scope="row"><a href="https://next.ink/266069/tarte-aux-fraises-biere-virtuelle-ascii-art-ce-que-cachent-les-security-txt-du-fr/">Tarte aux fraises, bière virtuelle, ASCII art : ce que cachent les security.txt du .fr</a> <span class="meta">(next, référence 1)</span></th><td>Technique</td><td>4 sur 5</td></tr><tr><td>2</td><th scope="row"><a href="https://www.cnil.fr/fr/rejeu-de-session-recommandation">Outils de rejeu de session : la CNIL publie sa recommandation pour guider les acteurs</a> <span class="meta">(cnil, référence 2)</span></th><td>Réglementaire</td><td>4 sur 5</td></tr><tr><td>3</td><th scope="row"><a href="https://next.ink/265651/le-cnrs-continue-son-menage-anti-gafam-sa-messagerie-migre-vers-partage-de-renater/">Le CNRS continue son ménage anti-GAFAM, sa messagerie migre vers Partage de Renater</a> <span class="meta">(next, référence 3)</span></th><td>Offre ou outil</td><td>4 sur 5</td></tr><tr><td>4</td><th scope="row"><a href="https://next.ink/265616/une-faille-critique-dans-le-noyau-linux-permet-de-faire-planter-un-serveur-via-tcp/">Une faille critique dans le noyau Linux permet de faire planter un serveur via TCP</a> <span class="meta">(next, référence 4)</span></th><td>Technique</td><td>4 sur 5</td></tr><tr><td>5</td><th scope="row"><a href="https://www.lemondeinformatique.fr/actualites/lire-bull-et-schwarz-digits-s-allient-pour-developper-un-cloud-souverain-europeen-dedie-a-l-ia-100903.html">Bull et Schwarz Digits s&#x27;allient pour développer un cloud souverain européen dédié à l&#x27;IA</a> <span class="meta">(lmi_ia, référence 5)</span></th><td>Offre ou outil</td><td>4 sur 5</td></tr><tr><td>6</td><th scope="row"><a href="https://next.ink/265451/chatbots-ia-le-droit-europeen-interdirait-la-reprise-darticles-de-presse-sous-paywall/">Chatbots IA : le droit européen interdirait la reprise d’articles de presse sous paywall</a> <span class="meta">(next, référence 6)</span></th><td>Réglementaire</td><td>4 sur 5</td></tr><tr><td>7</td><th scope="row"><a href="https://next.ink/266066/une-faille-dans-alpine-linux-permet-de-se-connecter-avec-un-mot-de-passe-trop-long/">Une faille dans Alpine Linux permet de se connecter avec un mot de passe trop long</a> <span class="meta">(next, référence 7)</span></th><td>Technique</td><td>3 sur 5</td></tr><tr><td>8</td><th scope="row"><a href="https://digital-strategy.ec.europa.eu/en/news/commission-preliminarily-finds-tiktoks-you-feed-breach-digital-services-act-harmful-rabbit-holes">Commission preliminarily finds TikTok’s ‘For You’ feed in breach of Digital Services Act for harmful ‘rabbit holes’ effect</a> <span class="meta">(commission_ue, référence 8)</span></th><td>Réglementaire</td><td>3 sur 5</td></tr><tr><td>9</td><th scope="row"><a href="https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation">New NVIDIA Cosmos 3 Open Models for Interactive World Simulation</a> <span class="meta">(huggingface, référence 9)</span></th><td>Technique</td><td>3 sur 5</td></tr><tr><td>10</td><th scope="row"><a href="https://www.lemondeinformatique.fr/actualites/lire-pangram-etend-sa-technologie-de-detection-de-l-ia-aux-images-et-aux-videos-100918.html">Pangram étend sa technologie de détection de l&#x27;IA aux images et aux vidéos</a> <span class="meta">(lmi_ia, référence 10)</span></th><td>Offre ou outil</td><td>3 sur 5</td></tr><tr><td>11</td><th scope="row"><a href="https://www.lemondeinformatique.fr/actualites/lire-le-parlement-europeen-met-en-garde-contre-les-derives-de-l-ia-100915.html">Le Parlement européen met en garde contre les dérives de l&#x27;IA</a> <span class="meta">(lmi_ia, référence 11)</span></th><td>Réglementaire</td><td>3 sur 5</td></tr><tr><td>12</td><th scope="row"><a href="https://next.ink/265850/compression-lz4-1-11-nous-avons-teste-les-performances-de-cette-version-majeure/">Compression lz4 1.11 : nous avons testé les performances de cette version « majeure »</a> <span class="meta">(next, référence 12)</span></th><td>Technique</td><td>3 sur 5</td></tr><tr><td>13</td><th scope="row"><a href="https://www.lemondeinformatique.fr/actualites/lire-les-editeurs-francais-accelerent-l-adoption-de-l-ia-100914.html">Les éditeurs français accélèrent l&#x27;adoption de l&#x27;IA</a> <span class="meta">(lmi_ia, référence 13)</span></th><td>Offre ou outil</td><td>3 sur 5</td></tr><tr><td>14</td><th scope="row"><a href="https://mistral.ai/news/build-with-studio/">Le Chonk brings the brains. Studio puts it to work.</a> <span class="meta">(mistral, référence 14)</span></th><td>Offre ou outil</td><td>3 sur 5</td></tr><tr><td>15</td><th scope="row"><a href="https://www.cnil.fr/fr/rejeu-de-session-vos-droits">Rejeu de session : ces outils qui enregistrent votre activité en ligne</a> <span class="meta">(cnil, référence 15)</span></th><td>Réglementaire</td><td>3 sur 5</td></tr><tr><td>16</td><th scope="row"><a href="https://openai.com/index/introducing-gpt-6-cyber">GPT‑6 Cyber: Advancing the frontier of aligned cybersecurity agents</a> <span class="meta">(openai, référence 16)</span></th><td>Technique</td><td>3 sur 5</td></tr><tr><td>17</td><th scope="row"><a href="https://huggingface.co/blog/Dharma-AI/dharma-field-extractor">Dharma Field Extractor: Any Document In, Structured Fields in JSON Out</a> <span class="meta">(huggingface, référence 17)</span></th><td>Technique</td><td>3 sur 5</td></tr><tr><td>18</td><th scope="row"><a href="https://digital-strategy.ec.europa.eu/en/library/independent-study-impact-age-assurance-fundamental-rights-and-costs-businesses">Independent study on the impact of age assurance on fundamental rights and costs for businesses</a> <span class="meta">(commission_ue, référence 18)</span></th><td>Réglementaire</td><td>3 sur 5</td></tr><tr><td>19</td><th scope="row"><a href="https://www.cnil.fr/fr/cepd-privacy-for-kids">Privacy for Kids : le CEPD lance une plateforme dédiée à la vie privée des enfants</a> <span class="meta">(cnil, référence 19)</span></th><td>Réglementaire</td><td>3 sur 5</td></tr><tr><td>20</td><th scope="row"><a href="https://next.ink/brief-article/letablissement-francais-du-sang-touche-par-le-piratage-de-certaines-chambres-froides/">☕️ L’Établissement français du sang touché par le piratage de certaines chambres froides</a> <span class="meta">(next, référence 20)</span></th><td>Technique</td><td>3 sur 5</td></tr><tr><td>21</td><th scope="row"><a href="https://openai.com/index/daybreak-red-aws-govcloud">Daybreak Red is now available in AWS GovCloud (US-East)</a> <span class="meta">(openai, référence 21)</span></th><td>Offre ou outil</td><td>3 sur 5</td></tr><tr><td>22</td><th scope="row"><a href="https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/">Qwen 3.8 27B on my laptop can interpret model weights, too</a> <span class="meta">(simon_willison, référence 22)</span></th><td>Technique</td><td>3 sur 5</td></tr><tr><td>23</td><th scope="row"><a href="https://www.greenit.fr/2026/11/03/participez-au-benchmark-green-it-2027/">Evaluez votre système d’information avec le Benchmark Green IT 2027</a> <span class="meta">(greenit, référence 23)</span></th><td>Technique</td><td>3 sur 5</td></tr><tr><td>24</td><th scope="row"><a href="https://next.ink/265416/airzone-withings-quand-des-fonctions-connectees-gratuites-deviennent-payantes/">Airzone, Withings : quand des fonctions connectées gratuites deviennent payantes</a> <span class="meta">(next, référence 24)</span></th><td>Réglementaire</td><td>3 sur 5</td></tr><tr><td>25</td><th scope="row"><a href="https://www.lemondeinformatique.fr/actualites/lire-openai-fusionne-chatgpt-et-work-autour-d-un-quota-commun-de-tokens-100896.html">OpenAI fusionne ChatGPT et Work autour d&#x27;un quota commun de tokens</a> <span class="meta">(lmi_ia, référence 25)</span></th><td>Technique</td><td>3 sur 5</td></tr></tbody>
+</table>
+</section>
+</main>
+<footer>
+<p class="encadre"><strong>Transparence :</strong> cette synthèse a été générée automatiquement par un service
+d'intelligence artificielle (Mistral AI – La Plateforme, modèle mistral-large-4) à partir de sources publiques, puis relue par
+Mathieu Ferrante. Vérifiez toujours l'information dans la source d'origine avant toute décision.</p>
+<p class="meta">Générée le 6 novembre 2026.</p>
+</footer>
+</body>
+</html>
